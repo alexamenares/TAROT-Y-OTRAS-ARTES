@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Productos | Tarot y Otras Artes</title>
+  <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+  <header class="site-header">
+    <nav class="navbar">
+      <a href="index.html" class="logo">
+        <img src="img/logo.png" alt="Logo" width="40" height="40">
+        <span>Tarot y Otras Artes</span>
+      </a>
+      <ul class="nav-links">
+        <li><a href="index.html">Inicio</a></li>
+        <li><a href="productos.html" class="active">Productos</a></li>
+        <li><a href="nosotros.html">Nosotros</a></li>
+        <li><a href="blogs.html">Blogs</a></li>
+        <li><a href="contacto.html">Contacto</a></li>
+        <li><a href="login.html">Iniciar sesión</a></li>
+      </ul>
+      <a href="carrito.html" class="cart-link">🛒 <span id="cart-count">0</span></a>
+    </nav>
+  </header>
+
+  <main>
+    <section class="catalogo">
+      <h1>Nuestros productos</h1>
+
+      <form class="filtros" id="form-filtros">
+        <input type="search" id="buscar" placeholder="Buscar producto...">
+        <select id="filtro-categoria" aria-label="Filtrar por categoría">
+          <option value="">Todas las categorías</option>
+          <option value="tarot">Tarot</option>
+          <option value="cristales">Cristales</option>
+          <option value="velas">Velas y rituales</option>
+          <option value="servicios">Servicios</option>
+        </select>
+      </form>
+
+      <div id="lista-productos" class="product-grid"></div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <p class="copyright">© 2025 Tarot y Otras Artes</p>
+  </footer>
+
+  <script src="js/productos.js"></script>
+  <script src="js/carrito.js"></script>
+  <script src="js/main.js"></script>
+</body>
+</html>

@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Carrito | Tarot y Otras Artes</title>
+  <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+  <header class="site-header">
+    <nav class="navbar">
+      <a href="index.html" class="logo">
+        <img src="img/logo.png" alt="Logo" width="40" height="40">
+        <span>Tarot y Otras Artes</span>
+      </a>
+      <ul class="nav-links">
+        <li><a href="index.html">Inicio</a></li>
+        <li><a href="productos.html">Productos</a></li>
+        <li><a href="contacto.html">Contacto</a></li>
+      </ul>
+      <a href="carrito.html" class="cart-link">🛒 <span id="cart-count">0</span></a>
+    </nav>
+  </header>
+
+  <main>
+    <section class="carrito">
+      <h1>Mi carrito de compras</h1>
+      <div id="carrito-vacio" class="hidden">
+        <p>Tu carrito está vacío.</p>
+        <a href="productos.html" class="btn-primary">Ir a productos</a>
+      </div>
+      <table id="tabla-carrito" class="tabla-carrito">
+        <thead>
+          <tr><th>Producto</th><th>Precio</th><th>Cantidad</th><th>Subtotal</th><th></th></tr>
+        </thead>
+        <tbody id="carrito-body"></tbody>
+      </table>
+
+      <aside class="resumen">
+        <p>Total: <strong id="total-carrito">$0</strong></p>
+        <button id="btn-pagar" class="btn-primary">PAGAR</button>
+      </aside>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <p class="copyright">© 2025 Tarot y Otras Artes</p>
+  </footer>
+
+  <script src="js/carrito.js"></script>
+  <script src="js/main.js"></script>
+</body>
+</html>

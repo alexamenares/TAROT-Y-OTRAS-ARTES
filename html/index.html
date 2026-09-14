@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Tarot y Otras Artes - Tienda online de productos y servicios espirituales">
+  <title>Tarot y Otras Artes | Inicio</title>
+  <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+  <header class="site-header">
+    <nav class="navbar" aria-label="Navegación principal">
+      <a href="index.html" class="logo">
+        <img src="img/logo.png" alt="Logo Tarot y Otras Artes" width="40" height="40">
+        <span>Tarot y Otras Artes</span>
+      </a>
+      <ul class="nav-links">
+        <li><a href="index.html">Inicio</a></li>
+        <li><a href="productos.html">Productos</a></li>
+        <li><a href="nosotros.html">Nosotros</a></li>
+        <li><a href="blogs.html">Blogs</a></li>
+        <li><a href="contacto.html">Contacto</a></li>
+        <li><a href="login.html">Iniciar sesión</a></li>
+      </ul>
+      <a href="carrito.html" class="cart-link" aria-label="Ir al carrito">
+        🛒 <span id="cart-count">0</span>
+      </a>
+    </nav>
+  </header>
+
+  <main>
+    <section class="hero">
+      <h1>Conecta con tu energía interior</h1>
+      <p>Mazos de tarot, cristales, velas rituales y lecturas personalizadas con profesionales verificados.</p>
+      <a href="productos.html" class="btn-primary">Explorar productos</a>
+    </section>
+
+    <section class="destacados">
+      <h2>Productos destacados</h2>
+      <div id="lista-destacados" class="product-grid"></div>
+    </section>
+
+    <section class="video-section">
+      <h2>Conoce nuestro espacio</h2>
+      <video controls width="100%" poster="img/poster.jpg">
+        <source src="img/presentacion.mp4" type="video/mp4">
+        Tu navegador no soporta video HTML5.
+      </video>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div class="footer-cols">
+      <div>
+        <h3>Tarot y Otras Artes</h3>
+        <p>Av. Espiritual 1234, Santiago</p>
+        <p>contacto@tarototrasartes.cl</p>
+      </div>
+      <div>
+        <h3>Enlaces</h3>
+        <ul>
+          <li><a href="productos.html">Productos</a></li>
+          <li><a href="nosotros.html">Nosotros</a></li>
+          <li><a href="contacto.html">Contacto</a></li>
+        </ul>
+      </div>
+      <div>
+        <h3>Síguenos</h3>
+        <p>Instagram · Facebook · TikTok</p>
+      </div>
+    </div>
+    <p class="copyright">© 2025 Tarot y Otras Artes. Todos los derechos reservados.</p>
+  </footer>
+
+  <script src="js/productos.js"></script>
+  <script src="js/carrito.js"></script>
+  <script src="js/main.js"></script>
+</body>
+</html>
