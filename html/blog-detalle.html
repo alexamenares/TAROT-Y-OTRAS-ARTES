@@ -7,7 +7,7 @@
     <!-- Base para una futura adaptación a distintos tamaños de pantalla. -->
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
-    <title>Ingresar | Tarot y Otras Artes</title>
+    <title>Publicación | Tarot y Otras Artes</title>
 
     <!-- Bootstrap entrega componentes y una estructura visual base. -->
     <link
@@ -17,6 +17,9 @@
 
     <!-- Hoja de estilos propia del proyecto. -->
     <link rel="stylesheet" href="css/estilos.css" />
+
+    <!-- Datos simulados de los artículos del blog. -->
+    <script src="js/datos-blog.js" defer></script>
   </head>
 
   <body>
@@ -52,7 +55,9 @@
                 <a class="nav-link" href="biblioteca.html">Biblioteca</a>
               </li>
               <li class="nav-item">
-                <a class="nav-link" href="blog.html">Blog</a>
+                <a class="nav-link active" href="blog.html">
+                  Blog
+                </a>
               </li>
               <li class="nav-item">
                 <a class="nav-link" href="nosotros.html">Nosotros</a>
@@ -99,13 +104,7 @@
                 </a>
               </li>
               <li class="nav-item">
-                <a
-                  class="nav-link active"
-                  href="login.html"
-                  aria-current="page"
-                >
-                  Ingresar
-                </a>
+                <a class="nav-link" href="login.html">Ingresar</a>
               </li>
             </ul>
           </div>
@@ -114,93 +113,22 @@
     </header>
 
     <main>
-      <!-- Cabecera específica de inicio de sesión. -->
       <section class="cabecera-pagina">
         <div class="container">
-          <p class="etiqueta-portada">Tu espacio personal</p>
+          <p class="etiqueta-portada">Publicación del blog</p>
 
-          <h1>Ingresa a tu cuenta</h1>
+          <h1>Detalle de la publicación</h1>
 
-          <p>Retoma tus experiencias, recursos y momentos de reflexión.</p>
+          <p>
+            Contenido editorial completo con imágenes, reflexiones y enlaces
+            a otras secciones del proyecto.
+          </p>
         </div>
       </section>
 
-      <!-- Formulario validado en tiempo real con JavaScript. -->
+      <!-- JavaScript insertará aquí el artículo según el ?slug= de la URL. -->
       <section class="seccion-catalogo">
-        <div class="container">
-          <div class="row justify-content-center">
-            <div class="col-lg-6">
-              <article class="tarjeta-experiencia">
-                <div class="contenido-tarjeta p-4 p-md-5">
-                  <h2>Bienvenido nuevamente</h2>
-
-                  <p>Ingresa tus credenciales para continuar.</p>
-
-                  <!-- novalidate permite usar nuestros propios mensajes de validación. -->
-                  <form id="formularioLogin" novalidate>
-                    <div class="mb-3">
-                      <label class="form-label" for="correoLogin">
-                        Correo electrónico
-                      </label>
-
-                      <input
-                        class="form-control"
-                        id="correoLogin"
-                        maxlength="254"
-                        name="correo"
-                        type="email"
-                        autocomplete="email"
-                      />
-
-                      <div
-                        class="mensaje-validacion"
-                        id="mensajeCorreoLogin"
-                      ></div>
-                    </div>
-
-                    <div class="mb-4">
-                      <label class="form-label" for="contrasenaLogin">
-                        Contraseña
-                      </label>
-
-                      <input
-                        class="form-control"
-                        id="contrasenaLogin"
-                        maxlength="72"
-                        name="contrasena"
-                        type="password"
-                        autocomplete="current-password"
-                      />
-
-                      <div
-                        class="mensaje-validacion"
-                        id="mensajeContrasenaLogin"
-                      ></div>
-                    </div>
-
-                    <p class="mb-4">
-                      <a href="contacto.html">
-                        ¿Olvidaste tu contraseña?
-                      </a>
-                    </p>
-
-                    <!-- Mensaje general tras enviar el formulario. -->
-                    <div id="mensajeFormularioLogin" role="status"></div>
-
-                    <button class="btn btn-experiencia" type="submit">
-                      Ingresar
-                    </button>
-                  </form>
-
-                  <p class="mt-4 mb-0">
-                    ¿Aún no tienes una cuenta?
-                    <a href="registro.html">Crea tu cuenta</a>
-                  </p>
-                </div>
-              </article>
-            </div>
-          </div>
-        </div>
+        <div class="container" id="detalleBlog"></div>
       </section>
     </main>
 
@@ -228,8 +156,11 @@
       </div>
     </footer>
 
-    <!-- Código que valida el formulario de inicio de sesión. -->
-    <script src="js/login.js"></script>
+    <!-- Primero cargamos los datos simulados del blog. -->
+    <script src="js/datos-blog.js"></script>
+
+    <!-- Después cargamos la lógica que busca y muestra el artículo elegido. -->
+    <script src="js/blog-detalle.js"></script>
 
     <!-- Código común para actualizar el contador de Mi selección. -->
     <script src="js/navegacion.js"></script>

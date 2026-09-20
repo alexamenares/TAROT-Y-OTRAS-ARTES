@@ -7,7 +7,7 @@
     <!-- Base para una futura adaptación a distintos tamaños de pantalla. -->
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
-    <title>Mi selección | Tarot y Otras Artes</title>
+    <title>Biblioteca | Tarot y Otras Artes</title>
 
     <!-- Bootstrap entrega componentes y una estructura visual base. -->
     <link
@@ -17,6 +17,9 @@
 
     <!-- Hoja de estilos propia del proyecto. -->
     <link rel="stylesheet" href="css/estilos.css" />
+
+    <!-- Datos simulados de los recursos de biblioteca. -->
+    <script src="js/datos-biblioteca.js" defer></script>
   </head>
 
   <body>
@@ -49,7 +52,13 @@
                 <a class="nav-link" href="experiencias.html">Experiencias</a>
               </li>
               <li class="nav-item">
-                <a class="nav-link" href="biblioteca.html">Biblioteca</a>
+                <a
+                  class="nav-link active"
+                  href="biblioteca.html"
+                  aria-current="page"
+                >
+                  Biblioteca
+                </a>
               </li>
               <li class="nav-item">
                 <a class="nav-link" href="blog.html">Blog</a>
@@ -62,9 +71,9 @@
               </li>
               <li class="nav-item">
                 <a
-                  class="nav-link nav-link-destacada nav-link-seleccion active"
+                  class="nav-link nav-link-destacada nav-link-seleccion"
                   href="mi-seleccion.html"
-                  data-link-seleccion aria-current="page"
+                  data-link-seleccion
                 >
                   <span class="icono-menu-seleccion" aria-hidden="true">
                     <svg
@@ -108,22 +117,70 @@
     </header>
 
     <main>
-      <!-- Cabecera específica de la selección del usuario. -->
       <section class="cabecera-pagina">
         <div class="container">
-          <p class="etiqueta-portada">Mi experiencia</p>
+          <p class="etiqueta-portada">Biblioteca pública</p>
 
-          <h1>Mi selección</h1>
+          <h1>Recursos para aprender Tarot</h1>
 
           <p>
-            Revisa las experiencias que has elegido para tu camino personal.
+            Consulta guías, resúmenes e historias simuladas pensadas para una
+            primera etapa de aprendizaje.
           </p>
         </div>
       </section>
 
-      <!-- JavaScript mostrará aquí las experiencias guardadas en localStorage. -->
       <section class="seccion-catalogo">
-        <div class="container" id="contenedorSeleccion"></div>
+        <div class="container">
+          <div class="d-flex flex-wrap gap-2 justify-content-center mb-4">
+            <button
+              class="btn btn-outline-secondary boton-filtro activo"
+              type="button"
+              data-filtro-biblioteca="todos"
+            >
+              Todos
+            </button>
+            <button
+              class="btn btn-outline-secondary boton-filtro"
+              type="button"
+              data-filtro-biblioteca="aprendizaje"
+            >
+              Aprendizaje
+            </button>
+            <button
+              class="btn btn-outline-secondary boton-filtro"
+              type="button"
+              data-filtro-biblioteca="guia"
+            >
+              Guías
+            </button>
+            <button
+              class="btn btn-outline-secondary boton-filtro"
+              type="button"
+              data-filtro-biblioteca="historia"
+            >
+              Historia
+            </button>
+            <button
+              class="btn btn-outline-secondary boton-filtro"
+              type="button"
+              data-filtro-biblioteca="ejercicio"
+            >
+              Ejercicios
+            </button>
+          </div>
+
+          <p
+            class="text-center text-dark mb-4"
+            id="mensajeFiltroBiblioteca"
+            role="status"
+          >
+            Mostrando todos los recursos disponibles.
+          </p>
+
+          <!-- JavaScript insertará aquí las tarjetas de la biblioteca. -->
+          <div class="row g-4" id="contenedorBiblioteca"></div>
+        </div>
       </section>
     </main>
 
@@ -151,8 +208,8 @@
       </div>
     </footer>
 
-    <!-- Código que lee y muestra la selección guardada en el navegador. -->
-    <script src="js/seleccion.js"></script>
+    <!-- Código que renderiza la biblioteca desde datos-biblioteca.js. -->
+    <script src="js/biblioteca.js"></script>
 
     <!-- Código común para actualizar el contador de Mi selección. -->
     <script src="js/navegacion.js"></script>

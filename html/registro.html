@@ -17,6 +17,9 @@
 
     <!-- Hoja de estilos propia del proyecto. -->
     <link rel="stylesheet" href="css/estilos.css" />
+
+    <!-- Arreglo de regiones y comunas de Chile. -->
+    <script src="js/regiones-comunas.js" defer></script>
   </head>
 
   <body>
@@ -92,7 +95,7 @@
                   <span
                     class="contador-seleccion"
                     data-contador-seleccion
-                    aria-label="Experiencias seleccionadas"
+                    aria-label="Experiencias en el selección"
                   >
                     0
                   </span>
@@ -126,7 +129,7 @@
       <section class="seccion-catalogo">
         <div class="container">
           <div class="row justify-content-center">
-            <div class="col-lg-7">
+            <div class="col-lg-8">
               <article class="tarjeta-experiencia">
                 <div class="contenido-tarjeta p-4 p-md-5">
                   <h2>Información de registro</h2>
@@ -138,88 +141,156 @@
 
                   <!-- novalidate permite usar nuestros propios mensajes de validación. -->
                   <form id="formularioRegistro" novalidate>
-                    <div class="mb-3">
-                      <label class="form-label" for="nombreCompleto">
-                        Nombre completo
-                      </label>
-
-                      <input
-                        class="form-control"
-                        id="nombreCompleto"
-                        maxlength="120"
-                        name="nombreCompleto"
-                        type="text"
-                        autocomplete="name"
-                      />
-
-                      <div
-                        class="mensaje-validacion"
-                        id="mensajeNombreCompleto"
-                      ></div>
-                    </div>
-
-                    <div class="mb-3">
-                      <label class="form-label" for="correo">
-                        Correo electrónico
-                      </label>
-
-                      <input
-                        class="form-control"
-                        id="correo"
-                        maxlength="254"
-                        name="correo"
-                        type="email"
-                        autocomplete="email"
-                      />
-
-                      <div class="mensaje-validacion" id="mensajeCorreo"></div>
-                    </div>
-
-                    <div class="mb-3">
-                      <label class="form-label" for="contrasena">
-                        Contraseña
-                      </label>
-
-                      <input
-                        class="form-control"
-                        id="contrasena"
-                        maxlength="72"
-                        name="contrasena"
-                        type="password"
-                        autocomplete="new-password"
-                      />
-
-                      <div class="form-text">
-                        Debe contener entre 8 y 72 caracteres.
+                    <div class="row g-3">
+                      <div class="col-md-5">
+                        <label class="form-label" for="run">RUN</label>
+                        <input
+                          class="form-control"
+                          id="run"
+                          maxlength="12"
+                          name="run"
+                          placeholder="19011022K"
+                          type="text"
+                          autocomplete="off"
+                        />
+                        <div class="form-text">
+                          Sin puntos ni guion. Ej: 19011022K
+                        </div>
+                        <div class="mensaje-validacion" id="mensajeRun"></div>
                       </div>
 
-                      <div
-                        class="mensaje-validacion"
-                        id="mensajeContrasena"
-                      ></div>
+                      <div class="col-md-7">
+                        <label class="form-label" for="nombreCompleto">
+                          Nombre completo
+                        </label>
+                        <input
+                          class="form-control"
+                          id="nombreCompleto"
+                          maxlength="120"
+                          name="nombreCompleto"
+                          type="text"
+                          autocomplete="name"
+                        />
+                        <div
+                          class="mensaje-validacion"
+                          id="mensajeNombreCompleto"
+                        ></div>
+                      </div>
+
+                      <div class="col-md-7">
+                        <label class="form-label" for="correo">
+                          Correo electrónico
+                        </label>
+                        <input
+                          class="form-control"
+                          id="correo"
+                          maxlength="254"
+                          name="correo"
+                          type="email"
+                          autocomplete="email"
+                        />
+                        <div class="mensaje-validacion" id="mensajeCorreo"></div>
+                      </div>
+
+                      <div class="col-md-5">
+                        <label class="form-label" for="telefono">
+                          Teléfono (opcional)
+                        </label>
+                        <input
+                          class="form-control"
+                          id="telefono"
+                          maxlength="15"
+                          name="telefono"
+                          placeholder="+56912345678"
+                          type="tel"
+                        />
+                        <div
+                          class="mensaje-validacion"
+                          id="mensajeTelefono"
+                        ></div>
+                      </div>
+
+                      <div class="col-md-6">
+                        <label class="form-label" for="contrasena">
+                          Contraseña
+                        </label>
+                        <input
+                          class="form-control"
+                          id="contrasena"
+                          maxlength="72"
+                          name="contrasena"
+                          type="password"
+                          autocomplete="new-password"
+                        />
+                        <div class="form-text">
+                          Debe contener entre 8 y 72 caracteres.
+                        </div>
+                        <div
+                          class="mensaje-validacion"
+                          id="mensajeContrasena"
+                        ></div>
+                      </div>
+
+                      <div class="col-md-6">
+                        <label class="form-label" for="confirmarContrasena">
+                          Confirmar contraseña
+                        </label>
+                        <input
+                          class="form-control"
+                          id="confirmarContrasena"
+                          maxlength="72"
+                          name="confirmarContrasena"
+                          type="password"
+                          autocomplete="new-password"
+                        />
+                        <div
+                          class="mensaje-validacion"
+                          id="mensajeConfirmarContrasena"
+                        ></div>
+                      </div>
+
+                      <div class="col-md-6">
+                        <label class="form-label" for="region">Región</label>
+                        <select class="form-select" id="region" name="region">
+                          <option value="">Selecciona una región</option>
+                        </select>
+                        <div
+                          class="mensaje-validacion"
+                          id="mensajeRegion"
+                        ></div>
+                      </div>
+
+                      <div class="col-md-6">
+                        <label class="form-label" for="comuna">Comuna</label>
+                        <select class="form-select" id="comuna" name="comuna">
+                          <option value="">Selecciona una comuna</option>
+                        </select>
+                        <div
+                          class="mensaje-validacion"
+                          id="mensajeComuna"
+                        ></div>
+                      </div>
+
+                      <div class="col-12">
+                        <label class="form-label" for="direccion">
+                          Dirección
+                        </label>
+                        <input
+                          class="form-control"
+                          id="direccion"
+                          maxlength="300"
+                          name="direccion"
+                          type="text"
+                          autocomplete="street-address"
+                        />
+                        <div
+                          class="mensaje-validacion"
+                          id="mensajeDireccion"
+                        ></div>
+                      </div>
                     </div>
 
-                    <div class="mb-4">
-                      <label class="form-label" for="confirmarContrasena">
-                        Confirmar contraseña
-                      </label>
-
-                      <input
-                        class="form-control"
-                        id="confirmarContrasena"
-                        maxlength="72"
-                        name="confirmarContrasena"
-                        type="password"
-                        autocomplete="new-password"
-                      />
-
-                      <div
-                        class="mensaje-validacion"
-                        id="mensajeConfirmarContrasena"
-                      ></div>
-                    </div>
-
-                    <div class="form-check mb-4">
+                    <div class="form-check mt-4 mb-3">
                       <input
                         class="form-check-input"
                         id="aceptaTratamientoDatos"
@@ -244,7 +315,7 @@
                     <!-- Mensaje general tras enviar el formulario. -->
                     <div id="mensajeFormulario" role="status"></div>
 
-                    <button class="btn btn-experiencia" type="submit">
+                    <button class="btn btn-experiencia mt-2" type="submit">
                       Crear cuenta
                     </button>
                   </form>
@@ -288,7 +359,7 @@
     <!-- Código que valida los campos del formulario en tiempo real. -->
     <script src="js/registro.js"></script>
 
-    <!-- Código común para actualizar el contador de Mi selección. -->
+    <!-- Código común para actualizar el contador del selección. -->
     <script src="js/navegacion.js"></script>
 
     <!-- JavaScript de Bootstrap para componentes interactivos futuros. -->

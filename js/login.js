@@ -1,5 +1,10 @@
 /**
- * Obtenemos el formulario, los campos y los espacios para los mensajes.
+ * Login simulado.
+ * - Valida correo y contraseña con las reglas del proyecto.
+ * - Busca al usuario en "usuariosAdmin" (localStorage).
+ * - Si existe, guarda la sesión y redirige al panel admin
+ *   cuando el rol tiene acceso.
+ * - Si no existe, permite el acceso simulado como "consultante".
  */
 const formularioLogin = document.getElementById("formularioLogin");
 
@@ -16,7 +21,6 @@ const mensajeFormularioLogin = document.getElementById(
 
 /**
  * Actualiza visualmente un campo válido o inválido.
- * Bootstrap utiliza is-valid e is-invalid para sus estilos de validación.
  */
 function actualizarEstadoCampoLogin(
   campo,
@@ -38,7 +42,7 @@ function actualizarEstadoCampoLogin(
 }
 
 /**
- * Comprueba una estructura básica de correo electrónico.
+ * Validación de correo con patrón general.
  */
 function validarCorreoLogin() {
   const correo = campoCorreoLogin.value.trim();
@@ -58,8 +62,7 @@ function validarCorreoLogin() {
 }
 
 /**
- * Para iniciar sesión se solicita una contraseña con la misma regla
- * aplicada al registro: entre 8 y 72 caracteres.
+ * Regla del proyecto: contraseña entre 8 y 72 caracteres.
  */
 function validarContrasenaLogin() {
   const contrasena = campoContrasenaLogin.value;
@@ -88,7 +91,7 @@ function mostrarMensajeLogin(tipo, mensaje) {
 }
 
 /**
- * Limpia las marcas de validación tras una simulación exitosa.
+ * Limpia las marcas de validación.
  */
 function limpiarEstadosLogin() {
   const campos = [campoCorreoLogin, campoContrasenaLogin];
@@ -101,29 +104,109 @@ function limpiarEstadosLogin() {
   mensajeContrasenaLogin.textContent = "";
 }
 
-/* Validación mientras el usuario escribe. */
+/**
+ * Busca un usuario en el arreglo administrado por el panel admin.
+ * Si el mantenedor aún no existe en localStorage, devuelve null.
+ */
+function buscarUsuarioPorCorreo(correo) {
+  const guardados = localStorage.getItem("usuariosAdmin");
+
+  if (!guardados) return null;
+
+  try {
+    const lista = JSON.parse(guardados);
+
+    if (!Array.isArray(lista)) return null;
+
+    return (
+      lista.find(
+        (usuario) =>
+          String(usuario.correo).toLowerCase() === correo.toLowerCase(),
+      ) || null
+    );
+  } catch (error) {
+    return null;
+  }
+}
+
+/**
+ * Guarda la sesión simulada en localStorage.
+ */
+function guardarSesionLogin(usuario) {
+  const sesion = {
+    id: usuario.id,
+    nombre: `${usuario.nombre} ${usuario.apellidos || ""}`.trim(),
+    correo: usuario.correo,
+    rol: usuario.rol,
+    fechaIngreso: new Date().toISOString(),
+  };
+
+  localStorage.setItem("usuarioSesion", JSON.stringify(sesion));
+}
+
+/**
+ * Decide a dónde redirigir según el rol del usuario.
+ */
+function redirigirSegunRol(rol) {
+  if (rol === "admin" || rol === "guia") {
+    window.location.href = "admin.html";
+    return;
+  }
+
+  /* Consultante: vuelve al inicio del sitio público. */
+  window.location.href = "index.html";
+}
+
+/* Validación en vivo */
 campoCorreoLogin.addEventListener("input", validarCorreoLogin);
 campoContrasenaLogin.addEventListener("input", validarContrasenaLogin);
 
-/**
- * Por ahora simulamos el inicio de sesión.
- * En la etapa de integración enviaremos correo y contraseña al backend.
- */
 formularioLogin.addEventListener("submit", (evento) => {
   evento.preventDefault();
 
   const correoEsValido = validarCorreoLogin();
   const contrasenaEsValida = validarContrasenaLogin();
 
-  const formularioEsValido = correoEsValido && contrasenaEsValida;
-
-  if (!formularioEsValido) {
+  if (!correoEsValido || !contrasenaEsValida) {
     mostrarMensajeLogin("danger", "Revisa tus datos antes de continuar.");
     return;
   }
 
-  mostrarMensajeLogin("success", "Inicio de sesión simulado correctamente.");
+  const correo = campoCorreoLogin.value.trim();
+  const usuarioEncontrado = buscarUsuarioPorCorreo(correo);
 
-  formularioLogin.reset();
-  limpiarEstadosLogin();
+  if (usuarioEncontrado) {
+    /* Usuario real del mantenedor: guardamos su sesión. */
+    guardarSesionLogin(usuarioEncontrado);
+
+    mostrarMensajeLogin(
+      "success",
+      `Bienvenido, ${usuarioEncontrado.nombre}. Redirigiendo al panel...`,
+    );
+
+    setTimeout(() => redirigirSegunRol(usuarioEncontrado.rol), 900);
+    return;
+  }
+
+  /* Usuario no registrado: acceso simulado como consultante. */
+  const sesionSimulada = {
+    id: "invitado",
+    nombre: "Visitante",
+    apellidos: "",
+    correo,
+    rol: "consultante",
+  };
+
+  guardarSesionLogin(sesionSimulada);
+
+  mostrarMensajeLogin(
+    "success",
+    "Inicio de sesión simulado correctamente. Volviendo al inicio...",
+  );
+
+  setTimeout(() => {
+    formularioLogin.reset();
+    limpiarEstadosLogin();
+    window.location.href = "index.html";
+  }, 900);
 });

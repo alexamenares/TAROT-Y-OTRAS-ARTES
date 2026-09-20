@@ -35,6 +35,7 @@ function obtenerTextoPrecioDetalle(precio) {
 /**
  * Obtiene las experiencias guardadas en el navegador.
  * Si aún no existe una selección, devuelve un arreglo vacío.
+ * Normaliza ítems antiguos sin campo cantidad para evitar errores.
  */
 function obtenerSeleccionGuardada() {
   let seleccionGuardada = null;
@@ -49,11 +50,25 @@ function obtenerSeleccionGuardada() {
     return [];
   }
 
+  let seleccion;
   try {
-    return JSON.parse(seleccionGuardada);
+    seleccion = JSON.parse(seleccionGuardada);
   } catch (error) {
     return [];
   }
+
+  if (!Array.isArray(seleccion)) {
+    return [];
+  }
+
+  /* Normaliza ítems antiguos sin campo cantidad. */
+  return seleccion.map((experiencia) => ({
+    ...experiencia,
+    cantidad:
+      typeof experiencia.cantidad === "number" && experiencia.cantidad > 0
+        ? experiencia.cantidad
+        : 1,
+  }));
 }
 
 /**
@@ -75,21 +90,33 @@ function mostrarMensajeSeleccion(tipo, mensaje) {
 
 /**
  * Guarda la experiencia actual dentro de la selección del usuario.
- * Se evita agregar la misma experiencia dos veces.
+ * Si ya existe, aumenta su cantidad (hasta el límite del selección).
  */
 function agregarExperienciaASeleccion() {
   const seleccionActual = obtenerSeleccionGuardada();
 
-  const experienciaYaAgregada = seleccionActual.some(
+  const experienciaExistente = seleccionActual.find(
     (experiencia) => experiencia.id === experienciaSeleccionada.id,
   );
 
-  if (experienciaYaAgregada) {
-    mostrarMensajeSeleccion("warning", "Esta experiencia ya está en tu selección.");
-    return;
-  }
+  if (experienciaExistente) {
+    /* Ya estaba en la selección: subimos la cantidad si no llegó al tope. */
+    if (experienciaExistente.cantidad >= 10) {
+      mostrarMensajeSeleccion(
+        "warning",
+        "Ya alcanzaste el máximo de 10 unidades para esta experiencia.",
+      );
+      return;
+    }
 
-  seleccionActual.push(experienciaSeleccionada);
+    experienciaExistente.cantidad += 1;
+  } else {
+    /* Primera vez: agregamos con cantidad 1. */
+    seleccionActual.push({
+      ...experienciaSeleccionada,
+      cantidad: 1,
+    });
+  }
 
   /*
    * localStorage solo puede guardar texto.
@@ -112,7 +139,12 @@ function agregarExperienciaASeleccion() {
     window.actualizarContadorSeleccion();
   }
 
-  mostrarMensajeSeleccion("success", "La experiencia fue agregada a tu selección.");
+  mostrarMensajeSeleccion(
+    "success",
+    experienciaExistente
+      ? "Se aumentó la cantidad en tu selección."
+      : "La experiencia fue agregada a tu selección.",
+  );
 }
 
 /**

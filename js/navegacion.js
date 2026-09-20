@@ -1,6 +1,9 @@
 /**
  * Actualiza el contador visible de "Mi selección" en el menú.
  * La información se lee desde localStorage para mantener el MVP sin backend.
+ *
+ * El contador muestra la SUMA DE CANTIDADES, no el largo del arreglo.
+ * Es decir, si hay 2 experiencias con cantidades 3 y 1, muestra 4.
  */
 function obtenerCantidadSeleccionNav() {
   let seleccionGuardada = null;
@@ -18,11 +21,17 @@ function obtenerCantidadSeleccionNav() {
   try {
     const seleccion = JSON.parse(seleccionGuardada);
 
-    if (Array.isArray(seleccion)) {
-      return seleccion.length;
+    if (!Array.isArray(seleccion)) {
+      return 0;
     }
 
-    return 0;
+    return seleccion.reduce((total, experiencia) => {
+      const cantidad =
+        typeof experiencia.cantidad === "number" && experiencia.cantidad > 0
+          ? experiencia.cantidad
+          : 1;
+      return total + cantidad;
+    }, 0);
   } catch (error) {
     return 0;
   }

@@ -1,0 +1,262 @@
+/*
+ * Estilos del panel administrativo.
+ * Se mantienen las variables CSS del proyecto (definidas en estilos.css).
+ * Layout: menú vertical fijo a la izquierda + contenido a la derecha.
+ */
+
+.admin-cuerpo {
+  background-color: #f4f1ea;
+  color: var(--color-texto);
+  min-height: 100vh;
+}
+
+.admin-layout {
+  display: flex;
+  min-height: 100vh;
+}
+
+/* ---------- Sidebar ---------- */
+.admin-sidebar {
+  background-color: var(--color-noche);
+  color: var(--color-texto-claro);
+  display: flex;
+  flex-direction: column;
+  padding: 1.5rem 1rem;
+  width: 260px;
+  flex-shrink: 0;
+}
+
+.admin-sidebar-marca {
+  color: var(--color-dorado);
+  font-family: Georgia, "Times New Roman", serif;
+  font-size: 1.2rem;
+  font-weight: bold;
+  line-height: 1.2;
+  margin-bottom: 0.25rem;
+  text-decoration: none;
+}
+
+.admin-sidebar-marca:hover {
+  color: var(--color-pergamino);
+}
+
+.admin-sidebar-sub {
+  color: rgba(244, 238, 248, 0.7);
+  font-size: 0.78rem;
+  margin-bottom: 2rem;
+}
+
+.admin-menu {
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.admin-menu-enlace {
+  align-items: center;
+  border-radius: 0.4rem;
+  color: var(--color-texto-claro);
+  display: flex;
+  gap: 0.65rem;
+  padding: 0.6rem 0.75rem;
+  text-decoration: none;
+  transition: background-color 0.15s ease, color 0.15s ease;
+}
+
+.admin-menu-enlace:hover,
+.admin-menu-enlace.activo {
+  background-color: rgba(201, 165, 91, 0.15);
+  color: var(--color-dorado);
+}
+
+.admin-menu-enlace.activo {
+  border-left: 3px solid var(--color-dorado);
+  padding-left: calc(0.75rem - 3px);
+}
+
+.admin-menu-enlace svg {
+  flex-shrink: 0;
+  height: 1.15rem;
+  width: 1.15rem;
+}
+
+.admin-sidebar-pie {
+  border-top: 1px solid rgba(201, 165, 91, 0.35);
+  margin-top: auto;
+  padding-top: 1rem;
+}
+
+.admin-usuario-info {
+  color: rgba(244, 238, 248, 0.85);
+  font-size: 0.82rem;
+  margin-bottom: 0.75rem;
+}
+
+.admin-usuario-info strong {
+  color: var(--color-dorado);
+  display: block;
+  font-size: 0.9rem;
+}
+
+.admin-boton-salir {
+  background-color: transparent;
+  border: 1px solid rgba(201, 165, 91, 0.55);
+  border-radius: 0.4rem;
+  color: var(--color-dorado);
+  font-size: 0.85rem;
+  padding: 0.45rem 0.85rem;
+  text-decoration: none;
+  transition: background-color 0.15s ease, color 0.15s ease;
+  width: 100%;
+}
+
+.admin-boton-salir:hover {
+  background-color: var(--color-dorado);
+  color: var(--color-noche);
+}
+
+/* ---------- Contenido ---------- */
+.admin-contenido {
+  flex: 1;
+  min-width: 0;
+}
+
+.admin-encabezado {
+  align-items: center;
+  background-color: #ffffff;
+  border-bottom: 1px solid rgba(201, 165, 91, 0.35);
+  display: flex;
+  justify-content: space-between;
+  padding: 1.25rem 2rem;
+}
+
+.admin-encabezado h1 {
+  color: var(--color-noche);
+  font-family: Georgia, "Times New Roman", serif;
+  font-size: 1.6rem;
+  margin: 0;
+}
+
+.admin-cuerpo-contenido {
+  padding: 2rem;
+}
+
+/* ---------- Tarjetas de resumen ---------- */
+.admin-tarjeta {
+  background-color: #ffffff;
+  border: 1px solid rgba(201, 165, 91, 0.4);
+  border-radius: 0.5rem;
+  height: 100%;
+  padding: 1.5rem;
+}
+
+.admin-tarjeta h2,
+.admin-tarjeta h3 {
+  color: var(--color-noche);
+  font-family: Georgia, "Times New Roman", serif;
+}
+
+.admin-numero {
+  color: var(--color-vino);
+  font-family: Georgia, "Times New Roman", serif;
+  font-size: 2.4rem;
+  font-weight: bold;
+  line-height: 1;
+  margin: 0.5rem 0;
+}
+
+/* ---------- Tablas ---------- */
+.admin-tabla {
+  background-color: #ffffff;
+  border: 1px solid rgba(201, 165, 91, 0.4);
+  border-radius: 0.5rem;
+  overflow: hidden;
+}
+
+.admin-tabla table {
+  color: var(--color-texto);
+  margin: 0;
+}
+
+.admin-tabla thead th {
+  background-color: #faf6ed;
+  border-bottom: 1px solid rgba(201, 165, 91, 0.45);
+  color: var(--color-noche);
+  font-size: 0.82rem;
+  letter-spacing: 0.04rem;
+  text-transform: uppercase;
+}
+
+.admin-tabla td,
+.admin-tabla th {
+  padding: 0.85rem 1rem;
+  vertical-align: middle;
+}
+
+/* ---------- Botones admin ---------- */
+.boton-admin-primario {
+  background-color: var(--color-dorado);
+  border: 1px solid var(--color-dorado);
+  color: var(--color-noche);
+  font-weight: 700;
+}
+
+.boton-admin-primario:hover {
+  background-color: var(--color-vino);
+  border-color: var(--color-vino);
+  color: #ffffff;
+}
+
+.boton-admin-secundario {
+  background-color: transparent;
+  border: 1px solid var(--color-noche);
+  color: var(--color-noche);
+}
+
+.boton-admin-secundario:hover {
+  background-color: var(--color-noche);
+  color: var(--color-pergamino);
+}
+
+/* ---------- Formularios admin ---------- */
+.admin-form {
+  background-color: #ffffff;
+  border: 1px solid rgba(201, 165, 91, 0.4);
+  border-radius: 0.5rem;
+  padding: 2rem;
+}
+
+.admin-form .form-label {
+  color: var(--color-noche);
+  font-weight: 600;
+}
+
+/* ---------- Responsive ---------- */
+@media (max-width: 991.98px) {
+  .admin-layout {
+    flex-direction: column;
+  }
+
+  .admin-sidebar {
+    width: 100%;
+  }
+
+  .admin-menu {
+    flex-direction: row;
+    flex-wrap: wrap;
+  }
+
+  .admin-menu-enlace.activo {
+    border-left: 0;
+    border-bottom: 3px solid var(--color-dorado);
+    padding-left: 0.75rem;
+  }
+
+  .admin-encabezado,
+  .admin-cuerpo-contenido {
+    padding: 1.25rem;
+  }
+}

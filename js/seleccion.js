@@ -1,12 +1,24 @@
 /**
- * Contenedor vacío creado en mi-seleccion.html.
- * Aquí se mostrarán las experiencias guardadas por el usuario.
+ * Mi selección — selección de experiencias con control de cantidad.
+ *
+ * Estructura guardada en localStorage (clave: "seleccionExperiencias"):
+ * [
+ *   { id, categoria, nombre, descripcion, precio, imagen,
+ *     textoAlternativo, cantidad }
+ * ]
+ *
+ * Reglas del selección:
+ * - Cada experiencia se agrega con cantidad inicial 1.
+ * - La cantidad no puede bajar de 1 (para quitar, se usa "Quitar").
+ * - La cantidad no puede superar 10 (regla de negocio razonable).
+ * - El total referencial = suma de (precio × cantidad).
+ * - El contador del menú muestra la suma total de cantidades.
  */
 const contenedorSeleccion = document.getElementById("contenedorSeleccion");
 
 /**
- * Obtiene la selección almacenada en el navegador.
- * Si no existe información guardada, devuelve un arreglo vacío.
+ * Obtiene la selección guardada y normaliza los ítems antiguos
+ * (los que no tenían campo cantidad) para evitar errores.
  */
 function obtenerSeleccionGuardada() {
   const seleccionGuardada = localStorage.getItem("seleccionExperiencias");
@@ -15,27 +27,67 @@ function obtenerSeleccionGuardada() {
     return [];
   }
 
-  return JSON.parse(seleccionGuardada);
+  let seleccion;
+  try {
+    seleccion = JSON.parse(seleccionGuardada);
+  } catch (error) {
+    return [];
+  }
+
+  if (!Array.isArray(seleccion)) {
+    return [];
+  }
+
+  return seleccion.map((experiencia) => ({
+    ...experiencia,
+    cantidad:
+      typeof experiencia.cantidad === "number" && experiencia.cantidad > 0
+        ? experiencia.cantidad
+        : 1,
+  }));
 }
 
 /**
- * Recibe un precio numérico y devuelve un texto para mostrar al usuario.
+ * Guarda la selección actualizada en localStorage.
+ */
+function guardarSeleccion(seleccion) {
+  localStorage.setItem("seleccionExperiencias", JSON.stringify(seleccion));
+}
+
+/**
+ * Recibe un precio numérico y devuelve un texto comprensible.
  */
 function obtenerTextoPrecioSeleccion(precio) {
   if (precio === 0) {
     return "Gratuita";
   }
 
-  return `Precio referencial: $${precio.toLocaleString("es-CL")}`;
+  return `$${precio.toLocaleString("es-CL")}`;
 }
 
 /**
- * Calcula la suma de los precios referenciales de la selección.
- * Las experiencias gratuitas aportan el valor 0 al total.
+ * Calcula el total referencial sumando precio × cantidad.
  */
 function calcularTotalReferencial(seleccion) {
   return seleccion.reduce(
-    (total, experiencia) => total + experiencia.precio,
+    (total, experiencia) => total + experiencia.precio * experiencia.cantidad,
+    0,
+  );
+}
+
+/**
+ * Calcula el subtotal de una línea (precio × cantidad).
+ */
+function calcularSubtotal(experiencia) {
+  return experiencia.precio * experiencia.cantidad;
+}
+
+/**
+ * Cuenta cuántos ítems totales hay (suma de cantidades).
+ */
+function contarItemsTotales(seleccion) {
+  return seleccion.reduce(
+    (total, experiencia) => total + experiencia.cantidad,
     0,
   );
 }
@@ -61,12 +113,15 @@ function mostrarSeleccionVacia() {
 }
 
 /**
- * Crea el HTML correspondiente a una experiencia guardada.
- * data-id permite identificar cuál experiencia se debe quitar al hacer clic.
+ * Genera el HTML de una línea del selección con control +/-.
+ * El precio unitario y el subtotal se muestran separados.
  */
 function crearTarjetaSeleccion(experiencia) {
+  const esGratuita = experiencia.precio === 0;
+  const subtotal = calcularSubtotal(experiencia);
+
   return `
-    <article class="tarjeta-experiencia mb-4">
+    <article class="tarjeta-experiencia mb-4" data-id="${experiencia.id}">
       <div class="row g-0">
         <div class="col-md-2">
           <img
@@ -84,9 +139,49 @@ function crearTarjetaSeleccion(experiencia) {
 
             <p>${experiencia.descripcion}</p>
 
-            <p class="precio-experiencia">
-              ${obtenerTextoPrecioSeleccion(experiencia.precio)}
+            <p class="precio-experiencia mb-2">
+              Precio unitario: ${obtenerTextoPrecioSeleccion(experiencia.precio)}
             </p>
+
+            <div class="d-flex flex-wrap align-items-center gap-3 mt-3 mb-3">
+              <!-- Control de cantidad -->
+              <div class="control-cantidad" role="group" aria-label="Cantidad">
+                <button
+                  class="boton-cantidad boton-restar"
+                  type="button"
+                  data-accion="restar"
+                  data-id="${experiencia.id}"
+                  aria-label="Disminuir cantidad"
+                  ${experiencia.cantidad <= 1 ? "disabled" : ""}
+                >
+                  −
+                </button>
+
+                <span
+                  class="valor-cantidad"
+                  aria-live="polite"
+                  data-cantidad-id="${experiencia.id}"
+                >
+                  ${experiencia.cantidad}
+                </span>
+
+                <button
+                  class="boton-cantidad boton-sumar"
+                  type="button"
+                  data-accion="sumar"
+                  data-id="${experiencia.id}"
+                  aria-label="Aumentar cantidad"
+                  ${experiencia.cantidad >= 10 ? "disabled" : ""}
+                >
+                  +
+                </button>
+              </div>
+
+              <p class="mb-0 subtotal-linea">
+                Subtotal:
+                <strong>${esGratuita ? "Gratuita" : `$${subtotal.toLocaleString("es-CL")}`}</strong>
+              </p>
+            </div>
 
             <button
               class="btn btn-outline-danger boton-eliminar"
@@ -103,7 +198,34 @@ function crearTarjetaSeleccion(experiencia) {
 }
 
 /**
- * Elimina una experiencia según su identificador y actualiza localStorage.
+ * Actualiza la cantidad de una experiencia y vuelve a dibujar.
+ * delta puede ser +1 o -1.
+ */
+function cambiarCantidad(experienciaId, delta) {
+  const seleccionActual = obtenerSeleccionGuardada();
+
+  const experiencia = seleccionActual.find((item) => item.id === experienciaId);
+
+  if (!experiencia) return;
+
+  const nuevaCantidad = experiencia.cantidad + delta;
+
+  /* Límites del selección: mínimo 1, máximo 10. */
+  if (nuevaCantidad < 1 || nuevaCantidad > 10) return;
+
+  experiencia.cantidad = nuevaCantidad;
+
+  guardarSeleccion(seleccionActual);
+
+  if (typeof window.actualizarContadorSeleccion === "function") {
+    window.actualizarContadorSeleccion();
+  }
+
+  mostrarSeleccion();
+}
+
+/**
+ * Elimina una experiencia según su identificador.
  */
 function quitarExperienciaDeSeleccion(experienciaId) {
   const seleccionActual = obtenerSeleccionGuardada();
@@ -112,36 +234,61 @@ function quitarExperienciaDeSeleccion(experienciaId) {
     (experiencia) => experiencia.id !== experienciaId,
   );
 
-  localStorage.setItem(
-    "seleccionExperiencias",
-    JSON.stringify(seleccionActualizada),
-  );
+  guardarSeleccion(seleccionActualizada);
 
   if (typeof window.actualizarContadorSeleccion === "function") {
     window.actualizarContadorSeleccion();
   }
 
-  /* Volvemos a dibujar la página con la selección actualizada. */
   mostrarSeleccion();
 }
 
 /**
- * Conecta cada botón "Quitar" con la función de eliminación correspondiente.
+ * Conecta los botones +/- y quitar después de renderizar.
  */
-function configurarBotonesEliminar() {
-  const botonesEliminar = document.querySelectorAll(".boton-eliminar");
+function configurarBotonesSeleccion() {
+  document
+    .querySelectorAll(".boton-cantidad")
+    .forEach((boton) => {
+      boton.addEventListener("click", () => {
+        const id = Number(boton.dataset.id);
+        const accion = boton.dataset.accion;
 
-  botonesEliminar.forEach((boton) => {
-    boton.addEventListener("click", () => {
-      const experienciaId = Number(boton.dataset.id);
-
-      quitarExperienciaDeSeleccion(experienciaId);
+        cambiarCantidad(id, accion === "sumar" ? 1 : -1);
+      });
     });
+
+  document
+    .querySelectorAll(".boton-eliminar")
+    .forEach((boton) => {
+      boton.addEventListener("click", () => {
+        const id = Number(boton.dataset.id);
+        quitarExperienciaDeSeleccion(id);
+      });
+    });
+}
+
+/**
+ * Simula la confirmación de la selección (sin backend en esta etapa).
+ */
+function configurarBotonConfirmar() {
+  const botonConfirmar = document.getElementById("botonConfirmarSeleccion");
+  const mensajeConfirmar = document.getElementById("mensajeConfirmarSeleccion");
+
+  if (!botonConfirmar || !mensajeConfirmar) return;
+
+  botonConfirmar.addEventListener("click", () => {
+    mensajeConfirmar.innerHTML = `
+      <div class="alert alert-success mb-0" role="alert">
+        Selección confirmada en modo simulado. El backend se integrará en
+        una etapa posterior.
+      </div>
+    `;
   });
 }
 
 /**
- * Muestra la selección completa o el mensaje vacío, según corresponda.
+ * Renderiza el selección completo o el estado vacío.
  */
 function mostrarSeleccion() {
   const seleccionActual = obtenerSeleccionGuardada();
@@ -152,27 +299,51 @@ function mostrarSeleccion() {
   }
 
   const totalReferencial = calcularTotalReferencial(seleccionActual);
+  const itemsTotales = contarItemsTotales(seleccionActual);
 
   contenedorSeleccion.innerHTML = `
     <div class="mb-4">
       <p class="tipo-experiencia">
-        EXPERIENCIAS SELECCIONADAS: ${seleccionActual.length}
+        EXPERIENCIAS SELECCIONADAS: ${itemsTotales}
       </p>
 
-      <!-- text-dark asegura contraste sobre el fondo claro. -->
       <h2 class="text-dark">Tu recorrido elegido</h2>
-
-      <p class="text-dark">
-        Total referencial:
-        <strong>$${totalReferencial.toLocaleString("es-CL")}</strong>
-      </p>
     </div>
 
     ${seleccionActual.map(crearTarjetaSeleccion).join("")}
+
+    <div class="resumen-selección">
+      <p class="total-selección mb-3">
+        TOTAL REFERENCIAL:
+        <strong>$${totalReferencial.toLocaleString("es-CL")}</strong>
+      </p>
+
+      <div class="d-flex flex-wrap gap-3 justify-content-end">
+        <a class="btn btn-outline-secondary" href="experiencias.html">
+          Seguir explorando
+        </a>
+
+        <button
+          class="btn btn-experiencia"
+          id="botonConfirmarSeleccion"
+          type="button"
+        >
+          Confirmar selección
+        </button>
+      </div>
+
+      <div
+        id="mensajeConfirmarSeleccion"
+        class="mt-3"
+        role="status"
+        aria-live="polite"
+      ></div>
+    </div>
   `;
 
-  configurarBotonesEliminar();
+  configurarBotonesSeleccion();
+  configurarBotonConfirmar();
 }
 
-/* Ejecutamos la función al abrir la página. */
+/* Ejecutamos al cargar la página. */
 mostrarSeleccion();
