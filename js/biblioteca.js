@@ -1,25 +1,29 @@
-/*
-  Renderiza la biblioteca pública a partir del arreglo recursosBiblioteca
-  definido en datos-biblioteca.js.
-
-  Mantiene la misma estructura visual que el HTML original:
-  col-md-6 col-lg-4 + tarjeta-experiencia + marco-imagen-recurso + contenido-tarjeta.
-
-  Filtros (RN-L02): aprendizaje, guia, historia, ejercicio.
-*/
-const contenedorBiblioteca = document.getElementById("contenedorBiblioteca");
+/**
+ * Filtros simples para la biblioteca pública.
+ *
+ * No consultan backend: las tarjetas ya están escritas en el HTML y JavaScript
+ * solo decide cuáles quedan visibles. En una futura integración, esta lógica
+ * puede conservarse y las tarjetas podrían llegar desde una API.
+ */
 const botonesFiltroBiblioteca = document.querySelectorAll(
   "[data-filtro-biblioteca]",
 );
-const mensajeFiltroBiblioteca = document.getElementById("mensajeFiltroBiblioteca");
-
-let filtroCategoriaBiblioteca = "todos";
+const recursosBiblioteca = document.querySelectorAll("[data-categoria-recurso]");
+const mensajeFiltroBiblioteca = document.getElementById(
+  "mensajeFiltroBiblioteca",
+);
+const contenedoresImagenBiblioteca = document.querySelectorAll(
+  "[data-imagen-biblioteca]",
+);
 
 /**
- * Carga una carta única por recurso.
- * Si el archivo no existe, deja el marcador visual de la tarjeta.
+ * Carga una imagen opcional para cada recurso sin dejar una tarjeta rota si el
+ * archivo no existe. El estado “sin imagen real” permite que CSS conserve un
+ * marcador visual coherente en lugar de mostrar un ícono de error del navegador.
  */
-function cargarImagenRecurso(contenedor, rutaImagen, textoAlternativo) {
+function cargarImagenBiblioteca(contenedor) {
+  const rutaImagen = contenedor.dataset.imagenBiblioteca;
+  const textoAlternativo = contenedor.dataset.altBiblioteca;
   const imagen = new Image();
 
   imagen.addEventListener("load", () => {
@@ -37,91 +41,56 @@ function cargarImagenRecurso(contenedor, rutaImagen, textoAlternativo) {
 }
 
 /**
- * Construye la tarjeta de un recurso con la misma estructura original.
+ * Devuelve un texto claro para informar el filtro activo.
  */
-function crearTarjetaBiblioteca(recurso) {
-  return `
-    <div class="col-md-6 col-lg-4" data-categoria-recurso="${recurso.categoria}">
-      <article class="tarjeta-experiencia">
-        <div class="marco-imagen-recurso" data-ruta-imagen="${recurso.imagen}" data-alt-imagen="${recurso.altImagen}">
-          <div class="marcador-recurso">Carta pendiente</div>
-        </div>
+function obtenerMensajeFiltro(filtro, cantidadVisible) {
+  if (filtro === "todos") {
+    return `Mostrando todos los recursos disponibles (${cantidadVisible}).`;
+  }
 
-        <div class="contenido-tarjeta">
-          <p class="tipo-experiencia">${recurso.categoriaVisible}</p>
-          <h2>${recurso.titulo}</h2>
-          <p>${recurso.descripcion}</p>
-          <p><strong>Nivel:</strong> ${recurso.nivelVisible}</p>
-          <p><strong>Duración:</strong> ${recurso.duracion}</p>
-
-          <a
-            class="btn btn-experiencia"
-            href="biblioteca-detalle.html?slug=${recurso.slug}"
-          >
-            Ver recurso
-          </a>
-        </div>
-      </article>
-    </div>
-  `;
+  return `Mostrando recursos de ${filtro} (${cantidadVisible}).`;
 }
 
 /**
- * Aplica filtro, renderiza y luego intenta cargar las imágenes.
+ * Aplica el filtro y actualiza aria-pressed. Este atributo comunica a lectores
+ * de pantalla cuál de los controles representa la categoría actualmente activa.
  */
-function renderizarBiblioteca() {
-  const recursos = recursosBiblioteca.filter((recurso) => {
-    return (
-      filtroCategoriaBiblioteca === "todos" ||
-      recurso.categoria === filtroCategoriaBiblioteca
-    );
-  });
+function filtrarBiblioteca(filtroSeleccionado) {
+  let cantidadVisible = 0;
 
-  if (recursos.length === 0) {
-    contenedorBiblioteca.innerHTML = `
-      <div class="col-12">
-        <div class="alert alert-light text-center" role="alert">
-          No hay recursos en esta categoría por ahora.
-        </div>
-      </div>
-    `;
-  } else {
-    contenedorBiblioteca.innerHTML = recursos.map(crearTarjetaBiblioteca).join("");
+  recursosBiblioteca.forEach((recurso) => {
+    const coincideCategoria =
+      filtroSeleccionado === "todos" ||
+      recurso.dataset.categoriaRecurso === filtroSeleccionado;
 
-    /* Cargamos las imágenes una vez insertadas en el DOM. */
-    document
-      .querySelectorAll("[data-ruta-imagen]")
-      .forEach((marco) => {
-        cargarImagenRecurso(
-          marco,
-          marco.dataset.rutaImagen,
-          marco.dataset.altImagen,
-        );
-      });
-  }
+    recurso.classList.toggle("d-none", !coincideCategoria);
 
-  if (mensajeFiltroBiblioteca) {
-    if (filtroCategoriaBiblioteca === "todos") {
-      mensajeFiltroBiblioteca.textContent = `Mostrando todos los recursos disponibles (${recursos.length}).`;
-    } else {
-      mensajeFiltroBiblioteca.textContent = `Mostrando recursos de ${filtroCategoriaBiblioteca} (${recursos.length}).`;
+    if (coincideCategoria) {
+      cantidadVisible += 1;
     }
-  }
+  });
 
   botonesFiltroBiblioteca.forEach((boton) => {
-    const activo = boton.dataset.filtroBiblioteca === filtroCategoriaBiblioteca;
-    boton.classList.toggle("activo", activo);
-    boton.setAttribute("aria-pressed", String(activo));
+    const esBotonActivo =
+      boton.dataset.filtroBiblioteca === filtroSeleccionado;
+
+    boton.classList.toggle("activo", esBotonActivo);
+    boton.setAttribute("aria-pressed", String(esBotonActivo));
   });
+
+  mensajeFiltroBiblioteca.textContent = obtenerMensajeFiltro(
+    filtroSeleccionado,
+    cantidadVisible,
+  );
 }
 
-/* Eventos */
 botonesFiltroBiblioteca.forEach((boton) => {
   boton.addEventListener("click", () => {
-    filtroCategoriaBiblioteca = boton.dataset.filtroBiblioteca;
-    renderizarBiblioteca();
+    filtrarBiblioteca(boton.dataset.filtroBiblioteca);
   });
 });
 
-/* Estado inicial */
-renderizarBiblioteca();
+contenedoresImagenBiblioteca.forEach(cargarImagenBiblioteca);
+
+/* Dejamos el estado inicial declarado también para lectores de pantalla. */
+filtrarBiblioteca("todos");

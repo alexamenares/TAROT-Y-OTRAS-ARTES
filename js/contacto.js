@@ -1,6 +1,11 @@
 /**
- * Elementos del formulario de contacto.
- * El envio es simulado porque esta etapa todavia no usa backend.
+ * Formulario de contacto simulado.
+ *
+ * La validación ocurre en el navegador para entregar retroalimentación
+ * inmediata. En una versión conectada al backend, la validación del servidor
+ * seguirá siendo necesaria antes de guardar o enviar información.
+ * Los elementos obtenidos a continuación conectan cada validación con su campo
+ * y con el espacio donde se muestra la ayuda correspondiente.
  */
 const formularioContacto = document.getElementById("formularioContacto");
 
@@ -18,7 +23,7 @@ const mensajeFormularioContacto = document.getElementById(
 );
 
 /**
- * Aplica clases de Bootstrap y muestra un mensaje personalizado por campo.
+ * Aplica el estado visual y accesible al control nativo correspondiente.
  */
 function actualizarEstadoContacto(
   campo,
@@ -26,17 +31,13 @@ function actualizarEstadoContacto(
   esValido,
   mensaje,
 ) {
-  campo.classList.remove("is-valid", "is-invalid");
-
-  if (esValido) {
-    campo.classList.add("is-valid");
-    contenedorMensaje.textContent = "";
-    return;
-  }
-
-  campo.classList.add("is-invalid");
-  contenedorMensaje.textContent = mensaje;
-  contenedorMensaje.className = "mensaje-validacion text-danger small mt-1";
+  campo.classList.toggle("is-valid", esValido);
+  campo.classList.toggle("is-invalid", !esValido);
+  campo.setAttribute("aria-invalid", String(!esValido));
+  contenedorMensaje.textContent = esValido ? "" : mensaje;
+  contenedorMensaje.className = esValido
+    ? "mensaje-validacion"
+    : "mensaje-validacion text-danger small mt-1";
 }
 
 function validarNombreContacto() {
@@ -102,6 +103,11 @@ function mostrarMensajeContacto(tipo, mensaje) {
       ${mensaje}
     </div>
   `;
+
+  /* El snackbar refuerza el resultado sin ocultar la confirmación persistente. */
+  if (tipo === "success" && window.InterfazRitual) {
+    window.InterfazRitual.mostrarSnackbar(mensaje);
+  }
 }
 
 function limpiarEstadosContacto() {
@@ -114,6 +120,7 @@ function limpiarEstadosContacto() {
 
   campos.forEach((campo) => {
     campo.classList.remove("is-valid", "is-invalid");
+    campo.removeAttribute("aria-invalid");
   });
 
   mensajeNombreContacto.textContent = "";
@@ -143,6 +150,7 @@ formularioContacto.addEventListener("submit", (evento) => {
       "danger",
       "Revisa los campos marcados antes de enviar tu mensaje.",
     );
+    formularioContacto.querySelector(".is-invalid")?.focus();
     return;
   }
 

@@ -1,0 +1,209 @@
+/**
+ * Ajustes finales de la versión 4.
+ *
+ * Este archivo se carga después de estilos.css para complementar la hoja
+ * histórica sin borrar sus reglas. Contiene solo estilos propios de Tienda,
+ * Carrito y Checkout; por eso ayuda a localizar cambios de la V4 sin mezclar
+ * toda la estética anterior.
+ */
+.hero-tienda {
+  background-image: url("../imagenes/hero-tienda.png");
+}
+
+.hero-carrito {
+  background-image: url("../imagenes/hero-carrito.png");
+}
+
+.hero-seccion::before {
+  background: linear-gradient(
+    90deg,
+    rgba(9, 6, 17, 0.94) 0%,
+    rgba(9, 6, 17, 0.78) 42%,
+    rgba(9, 6, 17, 0.24) 76%,
+    rgba(9, 6, 17, 0.12) 100%
+  );
+}
+
+.nav-link-carrito {
+  align-items: center;
+  display: inline-flex;
+  justify-content: center;
+  min-height: 48px;
+  min-width: 48px;
+  position: relative;
+}
+
+/**
+ * Los controles esenciales de checkout son nativos para funcionar aunque el
+ * CDN de Material Web no responda. El proyecto usa Material Web en acciones y
+ * formularios compatibles, pero este flujo crítico conserva un respaldo HTML
+ * estándar y accesible.
+ */
+.campo-checkout-grupo {
+  margin-top: 1rem;
+}
+
+.campo-checkout-grupo label {
+  display: block;
+  margin-bottom: 0.4rem;
+}
+
+.campo-checkout {
+  background-color: var(--md-sys-color-surface);
+  border: 1px solid var(--md-sys-color-outline);
+  border-radius: 14px;
+  color: var(--md-sys-color-on-surface);
+  display: block;
+  font: inherit;
+  min-height: 56px;
+  padding: 0.85rem 1rem;
+  transition: background-color 160ms ease, border-color 160ms ease, box-shadow 160ms ease;
+  width: 100%;
+}
+
+.campo-checkout:hover:not(:disabled),
+.formulario-checkout select:hover:not(:disabled) {
+  border-color: var(--md-sys-color-secondary);
+}
+
+.campo-checkout:focus,
+.formulario-checkout select:focus {
+  border-color: var(--md-sys-color-primary);
+  box-shadow: 0 0 0 3px rgba(205, 184, 255, 0.22);
+  outline: 0;
+}
+
+.campo-checkout-error,
+.campo-checkout-error:focus {
+  border-color: var(--md-sys-color-error) !important;
+  box-shadow: 0 0 0 3px rgba(255, 180, 171, 0.16);
+}
+
+.texto-opcional {
+  color: var(--md-sys-color-on-surface-variant);
+  font-size: 0.9em;
+}
+
+.boton-material-principal {
+  align-items: center;
+  background-color: var(--md-sys-color-primary);
+  border: 0;
+  border-radius: 999px;
+  color: var(--md-sys-color-on-primary);
+  cursor: pointer;
+  display: inline-flex;
+  font: 700 1rem/1 "Lora", Georgia, serif;
+  justify-content: center;
+  margin-top: 1.25rem;
+  min-height: 48px;
+  padding: 0.8rem 1.5rem;
+  transition: background-color 160ms ease, box-shadow 160ms ease, transform 120ms ease;
+}
+
+.boton-material-principal:hover {
+  background-color: var(--md-sys-color-secondary);
+  box-shadow: 0 5px 18px rgba(0, 0, 0, 0.24);
+  transform: translateY(-1px);
+}
+
+.boton-material-principal:active {
+  box-shadow: none;
+  transform: translateY(0);
+}
+
+.boton-material-principal:focus-visible,
+.boton-cantidad:focus-visible,
+.boton-quitar-linea:focus-visible {
+  outline: 3px solid var(--md-sys-color-secondary);
+  outline-offset: 3px;
+}
+
+.control-cantidad {
+  height: 48px;
+  justify-content: space-between;
+  overflow: hidden;
+  padding: 2px;
+}
+
+.boton-cantidad,
+.boton-quitar-linea {
+  align-items: center;
+  background: transparent;
+  border: 0;
+  color: var(--md-sys-color-primary);
+  cursor: pointer;
+  display: inline-flex;
+  flex: 0 0 auto;
+  font-family: Arial, sans-serif;
+  justify-content: center;
+  line-height: 1;
+  padding: 0;
+  transition: background-color 150ms ease, color 150ms ease, transform 100ms ease;
+}
+
+.boton-cantidad {
+  border-radius: 50%;
+  font-size: 1.45rem;
+  height: 42px;
+  min-width: 42px;
+  width: 42px;
+}
+
+.boton-cantidad span,
+.boton-quitar-linea span {
+  align-items: center;
+  display: inline-flex;
+  height: 1em;
+  justify-content: center;
+  line-height: 1;
+  width: 1em;
+}
+
+.boton-cantidad:hover:not(:disabled) {
+  background-color: var(--md-sys-color-primary-container);
+  color: var(--md-sys-color-on-primary-container);
+}
+
+.boton-cantidad:active:not(:disabled),
+.boton-quitar-linea:active {
+  transform: scale(0.92);
+}
+
+.boton-cantidad:disabled {
+  cursor: not-allowed;
+  opacity: 0.38;
+}
+
+.boton-quitar-linea {
+  border-radius: 50%;
+  font-size: 1.35rem;
+  height: 44px;
+  min-width: 44px;
+  width: 44px;
+}
+
+.boton-quitar-linea:hover {
+  background-color: rgba(255, 180, 171, 0.16);
+  color: var(--md-sys-color-error);
+}
+
+/**
+ * Ajuste para pantallas más angostas: el degradado se intensifica para que el
+ * texto del Hero no compita con la fotografía de fondo.
+ */
+@media (max-width: 991.98px) {
+  .hero-seccion::before {
+    background: rgba(9, 6, 17, 0.68);
+  }
+}
+
+@media (max-width: 767.98px) {
+  .linea-carrito > .boton-quitar-linea {
+    grid-column: 3;
+    grid-row: 1;
+  }
+
+  .boton-material-principal {
+    width: 100%;
+  }
+}

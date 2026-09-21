@@ -1,0 +1,333 @@
+<!doctype html>
+<html lang="es">
+  <head>
+    <!-- Codificación para mostrar correctamente tildes y caracteres especiales. -->
+    <meta charset="UTF-8" />
+
+    <!-- Base para una futura adaptación a distintos tamaños de pantalla. -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <title>Biblioteca | Tarot y Otras Artes</title>
+
+    <!-- El emblema local evita depender de un recurso externo para el favicon. -->
+    <link
+      rel="icon"
+      href="imagenes/ouroboro-identidad-original.png"
+      type="image/png"
+    />
+
+    <!-- Tipografías de la identidad Ritual nocturno. -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;500;600;700&family=Lora:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&display=swap"
+      rel="stylesheet"
+    />
+
+    <!-- Bootstrap entrega componentes y una estructura visual base. -->
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+    />
+
+    <!-- Hoja de estilos propia del proyecto. -->
+    <link rel="stylesheet" href="css/estilos.css" />
+    <link rel="stylesheet" href="css/estilos-v4.css" />
+
+    <!-- Material Web se resuelve por CDN sin incorporar compilación al MVP estático. -->
+    <script type="importmap">
+      {
+        "imports": {
+          "@material/web/": "https://esm.run/@material/web/"
+        }
+      }
+    </script>
+
+    <!-- El módulo registra únicamente los componentes oficiales utilizados. -->
+    <script type="module" src="js/material.js"></script>
+  </head>
+
+  <body class="pagina-biblioteca">
+    <!-- Encabezado y menú principal del sitio. -->
+    <header class="encabezado-principal">
+      <nav class="navbar navbar-expand-xl">
+        <div class="container">
+          <a class="navbar-brand marca-sitio" href="index.html">
+            Tarot y Otras Artes
+          </a>
+
+          <button
+            class="navbar-toggler"
+            type="button"
+            data-bs-toggle="collapse"
+            data-bs-target="#menuPrincipal"
+            aria-controls="menuPrincipal"
+            aria-expanded="false"
+            aria-label="Abrir menú de navegación"
+          >
+            <span class="navbar-toggler-icon"></span>
+          </button>
+
+          <div class="collapse navbar-collapse" id="menuPrincipal">
+            <ul class="navbar-nav ms-auto align-items-lg-center menu-principal-lista">
+              <li class="nav-item"><a class="nav-link" href="index.html">Inicio</a></li>
+              <li class="nav-item"><a class="nav-link" href="experiencias.html">Experiencias</a></li>
+              <li class="nav-item"><a class="nav-link" href="tienda.html">Tienda</a></li>
+              <li class="nav-item"><a class="nav-link active" href="biblioteca.html" aria-current="page">Biblioteca</a></li>
+              <li class="nav-item"><a class="nav-link" href="blog.html">Blog</a></li>
+              <li class="nav-item"><a class="nav-link" href="nosotros.html">Nosotros</a></li>
+              <li class="nav-item"><a class="nav-link" href="contacto.html">Contacto</a></li>
+              <li class="nav-item"><a class="nav-link nav-link-carrito" href="carrito.html" data-link-carrito aria-label="Carrito vacío"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 4h2l2.2 10.2a2 2 0 0 0 2 1.6h7.9a2 2 0 0 0 1.9-1.4L21 8H7" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" /><circle cx="10" cy="20" r="1.2" /><circle cx="18" cy="20" r="1.2" /></svg><span class="contador-carrito" data-contador-carrito hidden>0</span></a></li>
+              <li class="nav-item"><a class="nav-link" href="login.html">Ingresar</a></li>
+            </ul>
+          </div>
+        </div>
+      </nav>
+    </header>
+
+    <main>
+      <section class="cabecera-pagina hero-seccion hero-biblioteca">
+        <div class="container">
+          <p class="etiqueta-portada">Biblioteca pública</p>
+
+          <h1>Recursos para aprender Tarot</h1>
+
+          <p>
+            Consulta guías, resúmenes e historias simuladas pensadas para una
+            primera etapa de aprendizaje.
+          </p>
+        </div>
+      </section>
+
+      <section class="seccion-catalogo">
+        <div class="container">
+          <!-- Los botones nativos exponen el filtro activo incluso sin JavaScript externo. -->
+          <div
+            class="filtros-material mb-4"
+            role="group"
+            aria-label="Filtrar recursos de biblioteca"
+          >
+            <button
+              class="boton-filtro activo"
+              type="button"
+              data-filtro-biblioteca="todos"
+              aria-pressed="true"
+            >
+              Todos
+            </button>
+            <button
+              class="boton-filtro"
+              type="button"
+              data-filtro-biblioteca="aprendizaje"
+              aria-pressed="false"
+            >
+              Aprendizaje
+            </button>
+            <button
+              class="boton-filtro"
+              type="button"
+              data-filtro-biblioteca="guia"
+              aria-pressed="false"
+            >
+              Guías
+            </button>
+            <button
+              class="boton-filtro"
+              type="button"
+              data-filtro-biblioteca="historia"
+              aria-pressed="false"
+            >
+              Historia
+            </button>
+          </div>
+
+          <p
+            class="text-center text-dark mb-4"
+            id="mensajeFiltroBiblioteca"
+            role="status"
+          >
+            Mostrando todos los recursos disponibles.
+          </p>
+
+          <div class="row g-4" id="contenedorBiblioteca">
+            <div class="col-md-6 col-lg-4" data-categoria-recurso="aprendizaje">
+              <article class="tarjeta-experiencia">
+                <div
+                  class="marco-imagen-recurso"
+                  data-imagen-biblioteca="imagenes/00-el-loco.png"
+                  data-alt-biblioteca="Carta El Loco como inicio del aprendizaje de Tarot"
+                >
+                  <div class="marcador-recurso">Carta pendiente</div>
+                </div>
+
+                <div class="contenido-tarjeta">
+                  <p class="tipo-experiencia">Aprendizaje</p>
+                  <h2>Arcanos mayores para empezar</h2>
+                  <p>
+                    Introducción breve a las cartas que representan etapas,
+                    decisiones y aprendizajes importantes.
+                  </p>
+                  <p><strong>Nivel:</strong> Inicial</p>
+                </div>
+              </article>
+            </div>
+
+            <div class="col-md-6 col-lg-4" data-categoria-recurso="guia">
+              <article class="tarjeta-experiencia">
+                <div
+                  class="marco-imagen-recurso"
+                  data-imagen-biblioteca="imagenes/27-seis-de-bastos.png"
+                  data-alt-biblioteca="Carta Seis de Bastos para representar una guía práctica"
+                >
+                  <div class="marcador-recurso">Carta pendiente</div>
+                </div>
+
+                <div class="contenido-tarjeta">
+                  <p class="tipo-experiencia">Guía</p>
+                  <h2>Cómo preparar una tirada simple</h2>
+                  <p>
+                    Pasos sugeridos para ordenar la pregunta, elegir una carta y
+                    registrar la reflexión personal.
+                  </p>
+                  <p><strong>Duración estimada:</strong> 8 minutos</p>
+                </div>
+              </article>
+            </div>
+
+            <div class="col-md-6 col-lg-4" data-categoria-recurso="historia">
+              <article class="tarjeta-experiencia">
+                <div
+                  class="marco-imagen-recurso"
+                  data-imagen-biblioteca="imagenes/52-tres-de-espadas.png"
+                  data-alt-biblioteca="Carta Tres de Espadas asociada a simbolismo histórico"
+                >
+                  <div class="marcador-recurso">Carta pendiente</div>
+                </div>
+
+                <div class="contenido-tarjeta">
+                  <p class="tipo-experiencia">Historia</p>
+                  <h2>Origen simbólico del Tarot</h2>
+                  <p>
+                    Recorrido resumido por el uso cultural de las cartas como
+                    lenguaje visual y herramienta de interpretación.
+                  </p>
+                  <p><strong>Formato:</strong> Resumen público</p>
+                </div>
+              </article>
+            </div>
+
+            <div class="col-md-6 col-lg-4" data-categoria-recurso="guia">
+              <article class="tarjeta-experiencia">
+                <div
+                  class="marco-imagen-recurso"
+                  data-imagen-biblioteca="imagenes/14-la-templanza.png"
+                  data-alt-biblioteca="Carta La Templanza como apoyo visual para un diario de lecturas"
+                >
+                  <div class="marcador-recurso">Carta pendiente</div>
+                </div>
+
+                <div class="contenido-tarjeta">
+                  <p class="tipo-experiencia">Guía</p>
+                  <h2>Diario de lecturas</h2>
+                  <p>
+                    Plantilla simulada para anotar fecha, pregunta, carta,
+                    emoción inicial y aprendizaje posterior.
+                  </p>
+                  <ul class="lista-check">
+                    <li>Pregunta clara.</li>
+                    <li>Observación de símbolos.</li>
+                    <li>Conclusión personal.</li>
+                  </ul>
+                </div>
+              </article>
+            </div>
+
+            <div class="col-md-6 col-lg-4" data-categoria-recurso="aprendizaje">
+              <article class="tarjeta-experiencia">
+                <div
+                  class="marco-imagen-recurso"
+                  data-imagen-biblioteca="imagenes/01-el-mago.png"
+                  data-alt-biblioteca="Carta El Mago para representar una lectura intuitiva responsable"
+                >
+                  <div class="marcador-recurso">Carta pendiente</div>
+                </div>
+
+                <div class="contenido-tarjeta">
+                  <p class="tipo-experiencia">Aprendizaje</p>
+                  <h2>Lectura intuitiva responsable</h2>
+                  <p>
+                    Recomendaciones para usar el Tarot como apoyo reflexivo, sin
+                    prometer certezas ni reemplazar orientación profesional.
+                  </p>
+                  <p><strong>Estado:</strong> Disponible</p>
+                </div>
+              </article>
+            </div>
+
+            <div class="col-md-6 col-lg-4" data-categoria-recurso="historia">
+              <article class="tarjeta-experiencia">
+                <div
+                  class="marco-imagen-recurso"
+                  data-imagen-biblioteca="imagenes/21-el-mundo.png"
+                  data-alt-biblioteca="Carta El Mundo para representar el Tarot como arte editorial"
+                >
+                  <div class="marcador-recurso">Carta pendiente</div>
+                </div>
+
+                <div class="contenido-tarjeta">
+                  <p class="tipo-experiencia">Historia</p>
+                  <h2>Tarot y arte editorial</h2>
+                  <p>
+                    Nota sobre la relación entre imagen, narrativa y diseño
+                    visual dentro de una experiencia mística contemporánea.
+                  </p>
+                  <p><strong>Estado:</strong> Próximamente ampliado</p>
+                </div>
+              </article>
+            </div>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <!-- Pie de página común del sitio. -->
+    <footer class="pie-pagina">
+      <div class="container">
+        <div class="row align-items-center">
+          <div class="col-lg-5">
+            <p class="marca-footer">Tarot y Otras Artes</p>
+            <p class="texto-footer">
+              Experiencias y recursos para explorar tu camino interior.
+            </p>
+          </div>
+
+          <nav class="col-lg-7 enlaces-footer" aria-label="Enlaces secundarios">
+            <a href="tienda.html">Tienda</a>
+            <a href="biblioteca.html">Biblioteca</a>
+            <a href="blog.html">Blog</a>
+            <a href="nosotros.html">Nosotros</a>
+            <a href="contacto.html">Contacto</a>
+            <a href="carrito.html">Carrito</a>
+          </nav>
+        </div>
+
+        <p class="copyright-footer">© 2026 Tarot y Otras Artes.</p>
+      </div>
+    </footer>
+
+    <!-- Componentes comunes: ouróboro, snackbar y diálogo de confirmación. -->
+    <script src="js/interfaz.js"></script>
+
+    <!-- Servicio compartido para carrito, migración y totales. -->
+    <script src="js/carrito-servicio.js"></script>
+
+    <!-- Filtros simulados de la biblioteca pública. -->
+    <script src="js/biblioteca.js"></script>
+
+    <!-- Código común para actualizar el contador del carrito. -->
+    <script src="js/navegacion.js"></script>
+
+    <!-- JavaScript de Bootstrap para componentes interactivos futuros. -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"></script>
+  </body>
+</html>
