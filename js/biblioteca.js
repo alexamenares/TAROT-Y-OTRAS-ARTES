@@ -1,6 +1,9 @@
 /**
  * Filtros simples para la biblioteca pública.
- * No consultan backend: solo muestran u ocultan tarjetas ya escritas en HTML.
+ *
+ * No consultan backend: las tarjetas ya están escritas en el HTML y JavaScript
+ * solo decide cuáles quedan visibles. En una futura integración, esta lógica
+ * puede conservarse y las tarjetas podrían llegar desde una API.
  */
 const botonesFiltroBiblioteca = document.querySelectorAll(
   "[data-filtro-biblioteca]",
@@ -14,8 +17,9 @@ const contenedoresImagenBiblioteca = document.querySelectorAll(
 );
 
 /**
- * Carga una carta única para cada recurso.
- * Si el archivo aún no existe, conserva el marcador visual de la tarjeta.
+ * Carga una imagen opcional para cada recurso sin dejar una tarjeta rota si el
+ * archivo no existe. El estado “sin imagen real” permite que CSS conserve un
+ * marcador visual coherente en lugar de mostrar un ícono de error del navegador.
  */
 function cargarImagenBiblioteca(contenedor) {
   const rutaImagen = contenedor.dataset.imagenBiblioteca;
@@ -48,7 +52,8 @@ function obtenerMensajeFiltro(filtro, cantidadVisible) {
 }
 
 /**
- * Aplica el filtro seleccionado y actualiza el estado visual de los botones.
+ * Aplica el filtro y actualiza aria-pressed. Este atributo comunica a lectores
+ * de pantalla cuál de los controles representa la categoría actualmente activa.
  */
 function filtrarBiblioteca(filtroSeleccionado) {
   let cantidadVisible = 0;

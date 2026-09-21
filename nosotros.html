@@ -9,6 +9,21 @@
 
     <title>Nosotros | Tarot y Otras Artes</title>
 
+    <!-- El emblema local evita depender de un recurso externo para el favicon. -->
+    <link
+      rel="icon"
+      href="imagenes/ouroboro-identidad-original.png"
+      type="image/png"
+    />
+
+    <!-- Tipografías de la identidad Ritual nocturno. -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;500;600;700&family=Lora:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&display=swap"
+      rel="stylesheet"
+    />
+
     <!-- Bootstrap entrega componentes y una estructura visual base. -->
     <link
       href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css"
@@ -17,9 +32,22 @@
 
     <!-- Hoja de estilos propia del proyecto. -->
     <link rel="stylesheet" href="css/estilos.css" />
+    <link rel="stylesheet" href="css/estilos-v4.css" />
+
+    <!-- Material Web se resuelve por CDN sin incorporar compilación al MVP estático. -->
+    <script type="importmap">
+      {
+        "imports": {
+          "@material/web/": "https://esm.run/@material/web/"
+        }
+      }
+    </script>
+
+    <!-- El módulo registra únicamente los componentes oficiales utilizados. -->
+    <script type="module" src="js/material.js"></script>
   </head>
 
-  <body>
+  <body class="pagina-nosotros">
     <!-- Encabezado y menú principal del sitio. -->
     <header class="encabezado-principal">
       <nav class="navbar navbar-expand-xl">
@@ -41,12 +69,17 @@
           </button>
 
           <div class="collapse navbar-collapse" id="menuPrincipal">
-            <ul class="navbar-nav ms-auto align-items-lg-center menu-principal-lista">
+            <ul
+              class="navbar-nav ms-auto align-items-lg-center menu-principal-lista"
+            >
               <li class="nav-item">
                 <a class="nav-link" href="index.html">Inicio</a>
               </li>
               <li class="nav-item">
                 <a class="nav-link" href="experiencias.html">Experiencias</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="tienda.html">Tienda</a>
               </li>
               <li class="nav-item">
                 <a class="nav-link" href="biblioteca.html">Biblioteca</a>
@@ -59,50 +92,33 @@
                   class="nav-link active"
                   href="nosotros.html"
                   aria-current="page"
+                  >Nosotros</a
                 >
-                  Nosotros
-                </a>
               </li>
               <li class="nav-item">
                 <a class="nav-link" href="contacto.html">Contacto</a>
               </li>
               <li class="nav-item">
                 <a
-                  class="nav-link nav-link-destacada nav-link-seleccion"
-                  href="mi-seleccion.html"
-                  data-link-seleccion
+                  class="nav-link nav-link-carrito"
+                  href="carrito.html"
+                  data-link-carrito
+                  aria-label="Carrito vacío"
+                  ><svg viewBox="0 0 24 24" aria-hidden="true">
+                    <path
+                      d="M3 4h2l2.2 10.2a2 2 0 0 0 2 1.6h7.9a2 2 0 0 0 1.9-1.4L21 8H7"
+                      fill="none"
+                      stroke="currentColor"
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                      stroke-width="1.8"
+                    />
+                    <circle cx="10" cy="20" r="1.2" />
+                    <circle cx="18" cy="20" r="1.2" /></svg
+                  ><span class="contador-carrito" data-contador-carrito hidden
+                    >0</span
+                  ></a
                 >
-                  <span class="icono-menu-seleccion" aria-hidden="true">
-                    <svg
-                      viewBox="0 0 24 24"
-                      focusable="false"
-                      role="img"
-                    >
-                      <path
-                        d="M6.8 8.5h10.4l.8 11H6l.8-11Z"
-                        fill="none"
-                        stroke="currentColor"
-                        stroke-linejoin="round"
-                        stroke-width="1.8"
-                      />
-                      <path
-                        d="M9 8.5V7a3 3 0 0 1 6 0v1.5"
-                        fill="none"
-                        stroke="currentColor"
-                        stroke-linecap="round"
-                        stroke-width="1.8"
-                      />
-                    </svg>
-                  </span>
-                  <span>Mi selección</span>
-                  <span
-                    class="contador-seleccion"
-                    data-contador-seleccion
-                    aria-label="Experiencias seleccionadas"
-                  >
-                    0
-                  </span>
-                </a>
               </li>
               <li class="nav-item">
                 <a class="nav-link" href="login.html">Ingresar</a>
@@ -114,7 +130,7 @@
     </header>
 
     <main>
-      <section class="cabecera-pagina">
+      <section class="cabecera-pagina hero-seccion hero-nosotros">
         <div class="container">
           <p class="etiqueta-portada">Nosotros</p>
 
@@ -161,9 +177,9 @@
                   <h2>Tarot como lenguaje visual</h2>
 
                   <p>
-                    El siguiente video externo acompaña la identidad visual del
-                    proyecto y evita depender de un reproductor embebido que
-                    pueda bloquearse.
+                    El siguiente video acompaña la presentación visual del
+                    proyecto. Se reproduce desde un archivo local para no
+                    depender de un reproductor externo que podría bloquearse.
                   </p>
 
                   <div class="video-presentacion mb-3">
@@ -173,22 +189,22 @@
                       poster="imagenes/00-el-loco.png"
                     >
                       <source
-                        src="https://commons.wikimedia.org/wiki/Special:Redirect/file/Vector_graphics_Tarot_reader.webm"
-                        type="video/webm"
+                        src="Videos/Tarot-1-minuto.mp4"
+                        type="video/mp4"
                       />
                       Tu navegador no puede reproducir este video.
                     </video>
                   </div>
 
                   <p class="small mb-0">
-                    Fuente del video:
+                    Fuente original del video:
                     <a
-                      href="https://commons.wikimedia.org/wiki/File:Vector_graphics_Tarot_reader.webm"
+                      href="https://www.youtube.com/shorts/egKcmApL68E"
                       target="_blank"
                       rel="noopener"
                     >
-                      Wikimedia Commons
-                    </a>.
+                      Pequeña muestra de tarot </a
+                    >.
                   </p>
                 </div>
               </article>
@@ -210,11 +226,12 @@
           </div>
 
           <nav class="col-lg-7 enlaces-footer" aria-label="Enlaces secundarios">
+            <a href="tienda.html">Tienda</a>
             <a href="biblioteca.html">Biblioteca</a>
             <a href="blog.html">Blog</a>
             <a href="nosotros.html">Nosotros</a>
             <a href="contacto.html">Contacto</a>
-            <a href="mi-seleccion.html">Mi selección</a>
+            <a href="carrito.html">Carrito</a>
           </nav>
         </div>
 
@@ -222,7 +239,13 @@
       </div>
     </footer>
 
-    <!-- Código común para actualizar el contador de Mi selección. -->
+    <!-- Componentes comunes: ouróboro, snackbar y diálogo de confirmación. -->
+    <script src="js/interfaz.js"></script>
+
+    <!-- Servicio compartido para carrito, migración y totales. -->
+    <script src="js/carrito-servicio.js"></script>
+
+    <!-- Código común para actualizar el contador del carrito. -->
     <script src="js/navegacion.js"></script>
 
     <!-- JavaScript de Bootstrap para componentes interactivos futuros. -->

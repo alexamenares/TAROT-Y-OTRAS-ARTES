@@ -1,6 +1,9 @@
 /**
  * Interacciones simuladas del panel administrativo.
- * Ninguna accion se guarda en servidor: solo se actualiza la pantalla actual.
+ *
+ * Ninguna acción se guarda en servidor: el objetivo es practicar formularios,
+ * validación y cambios de estado sin alterar la base de datos ya construida en
+ * el backend. Al recargar, las modificaciones visuales se reinician.
  */
 const mensajeAdmin = document.getElementById("mensajeAdmin");
 const formularioAdmin = document.getElementById("formularioAdmin");
@@ -13,7 +16,13 @@ const contadorPublicadosAdmin = document.getElementById(
 );
 const cuerpoTablaAdmin = document.querySelector(".tabla-admin tbody");
 
+/** Presenta el resultado tanto en la página como en el aviso temporal global. */
 function mostrarMensajeAdmin(tipo, mensaje) {
+  if (window.InterfazRitual) {
+    const tipoSnackbar = tipo === "danger" ? "error" : tipo === "warning" ? "aviso" : "exito";
+    window.InterfazRitual.mostrarSnackbar(mensaje, tipoSnackbar);
+  }
+
   mensajeAdmin.innerHTML = `
     <div class="alert alert-${tipo} mt-3 mb-0" role="alert">
       ${mensaje}
@@ -21,23 +30,23 @@ function mostrarMensajeAdmin(tipo, mensaje) {
   `;
 }
 
+/**
+ * Mantiene juntos el estilo del campo, el atributo accesible y su mensaje para
+ * que todos comuniquen el mismo resultado de validación.
+ */
 function actualizarEstadoCampoAdmin(
   campo,
   contenedorMensaje,
   esValido,
   mensaje,
 ) {
-  campo.classList.remove("is-valid", "is-invalid");
-
-  if (esValido) {
-    campo.classList.add("is-valid");
-    contenedorMensaje.textContent = "";
-    return;
-  }
-
-  campo.classList.add("is-invalid");
-  contenedorMensaje.textContent = mensaje;
-  contenedorMensaje.className = "mensaje-validacion text-danger small mt-1";
+  campo.classList.toggle("is-valid", esValido);
+  campo.classList.toggle("is-invalid", !esValido);
+  campo.setAttribute("aria-invalid", String(!esValido));
+  contenedorMensaje.textContent = esValido ? "" : mensaje;
+  contenedorMensaje.className = esValido
+    ? "mensaje-validacion"
+    : "mensaje-validacion text-danger small mt-1";
 }
 
 function validarTituloAdmin() {
@@ -75,19 +84,23 @@ function actualizarContadorPublicados() {
 /**
  * Cambia el estado visual de una fila y reemplaza el boton disponible.
  */
-function cambiarEstadoFila(boton, textoEstado, claseEstado, textoAccion) {
+/**
+ * Cambia solo la fila intervenida. Reemplaza el botón porque cada estado ofrece
+ * la acción opuesta: publicar si está en revisión o enviar a revisión si ya fue
+ * publicado.
+ */
+function cambiarEstadoFila(boton, textoEstado, claseEstado) {
   const fila = boton.closest("tr");
   const etiquetaEstado = fila.querySelector(".badge");
 
   etiquetaEstado.className = `badge ${claseEstado}`;
   etiquetaEstado.textContent = textoEstado;
-  boton.textContent = textoAccion;
 
   if (claseEstado === "estado-publicado") {
-    boton.className = "btn btn-sm btn-outline-secondary boton-admin-revision";
+    boton.replaceWith(crearBotonAccionAdmin(false));
     mostrarMensajeAdmin("success", "Contenido publicado en modo simulado.");
   } else {
-    boton.className = "btn btn-sm btn-experiencia boton-admin-publicar";
+    boton.replaceWith(crearBotonAccionAdmin(true));
     mostrarMensajeAdmin("warning", "Contenido enviado a revisión simulada.");
   }
 
@@ -95,16 +108,50 @@ function cambiarEstadoFila(boton, textoEstado, claseEstado, textoAccion) {
 }
 
 function configurarBotonAdmin(boton) {
-  boton.addEventListener("click", () => {
-    if (boton.classList.contains("boton-admin-publicar")) {
-      cambiarEstadoFila(boton, "Publicado", "estado-publicado", "Enviar a revisión");
+  boton.addEventListener("click", async () => {
+    const vaAPublicar = boton.classList.contains("boton-admin-publicar");
+    const fila = boton.closest("tr");
+    const titulo = fila?.querySelector("td")?.textContent.trim() || "el contenido";
+
+    /* El cambio de estado se confirma antes de modificar la fila simulada. */
+    const confirmado = window.InterfazRitual
+      ? await window.InterfazRitual.confirmar({
+          titulo: vaAPublicar ? "Publicar contenido" : "Enviar a revisión",
+          mensaje: `Esta acción cambiará el estado de “${titulo}” en la simulación.`,
+          textoConfirmar: vaAPublicar ? "Publicar" : "Enviar a revisión",
+        })
+      : window.confirm("¿Deseas cambiar el estado de este contenido?");
+
+    if (!confirmado) {
       return;
     }
 
-    cambiarEstadoFila(boton, "En revisión", "estado-revision", "Publicar");
+    if (vaAPublicar) {
+      cambiarEstadoFila(boton, "Publicado", "estado-publicado");
+      return;
+    }
+
+    cambiarEstadoFila(boton, "En revisión", "estado-revision");
   });
 }
 
+/**
+ * Crea un botón HTML fiable con la variante visual correcta y conecta su evento.
+ */
+function crearBotonAccionAdmin(esPublicar) {
+  const boton = document.createElement("button");
+
+  boton.className = esPublicar
+    ? "btn btn-experiencia boton-admin-publicar"
+    : "btn btn-outline-secondary boton-admin-revision";
+  boton.type = "button";
+  boton.textContent = esPublicar ? "Publicar" : "Enviar a revisión";
+  configurarBotonAdmin(boton);
+
+  return boton;
+}
+
+/** Construye un borrador temporal al enviar el formulario administrativo. */
 function crearFilaBorrador(titulo, tipo) {
   const fila = document.createElement("tr");
 
@@ -113,7 +160,7 @@ function crearFilaBorrador(titulo, tipo) {
   const celdaEstado = document.createElement("td");
   const celdaAccion = document.createElement("td");
   const etiquetaEstado = document.createElement("span");
-  const botonPublicar = document.createElement("button");
+  const botonPublicar = crearBotonAccionAdmin(true);
 
   celdaTitulo.textContent = titulo;
   celdaTipo.textContent = tipo;
@@ -122,21 +169,18 @@ function crearFilaBorrador(titulo, tipo) {
   etiquetaEstado.textContent = "Borrador";
   celdaEstado.appendChild(etiquetaEstado);
 
-  botonPublicar.className = "btn btn-sm btn-experiencia boton-admin-publicar";
-  botonPublicar.type = "button";
-  botonPublicar.textContent = "Publicar";
   celdaAccion.appendChild(botonPublicar);
 
   fila.append(celdaTitulo, celdaTipo, celdaEstado, celdaAccion);
-  configurarBotonAdmin(botonPublicar);
-
   cuerpoTablaAdmin.appendChild(fila);
 }
 
 function limpiarFormularioAdmin() {
   formularioAdmin.reset();
   campoTituloAdmin.classList.remove("is-valid", "is-invalid");
+  campoTituloAdmin.removeAttribute("aria-invalid");
   campoTipoAdmin.classList.remove("is-valid", "is-invalid");
+  campoTipoAdmin.removeAttribute("aria-invalid");
   mensajeTituloAdmin.textContent = "";
   mensajeTipoAdmin.textContent = "";
 }
@@ -163,6 +207,7 @@ formularioAdmin.addEventListener("submit", (evento) => {
       "danger",
       "Revisa los campos antes de crear el borrador simulado.",
     );
+    formularioAdmin.querySelector(".is-invalid")?.focus();
     return;
   }
 

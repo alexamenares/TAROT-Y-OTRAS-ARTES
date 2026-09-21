@@ -1,5 +1,11 @@
 /**
- * Obtenemos el formulario y sus campos para poder validarlos con JavaScript.
+ * Registro simulado del MVP.
+ *
+ * El formulario enseña validación en tiempo real y accesibilidad, pero no crea
+ * usuarios en la base de datos. Esa conexión se implementará cuando el frontend
+ * se integre con el backend ya construido.
+ * Los elementos obtenidos a continuación permiten validar el formulario sin
+ * depender de mensajes nativos distintos en cada navegador.
  */
 const formularioRegistro = document.getElementById("formularioRegistro");
 
@@ -23,21 +29,16 @@ const mensajeAceptaTratamientoDatos = document.getElementById(
 const mensajeFormulario = document.getElementById("mensajeFormulario");
 
 /**
- * Actualiza visualmente un campo válido o inválido.
- * Bootstrap usa is-valid e is-invalid para colorear los controles.
+ * Actualiza el estado visual y accesible de un control nativo del formulario.
  */
 function actualizarEstadoCampo(campo, contenedorMensaje, esValido, mensaje) {
-  campo.classList.remove("is-valid", "is-invalid");
-
-  if (esValido) {
-    campo.classList.add("is-valid");
-    contenedorMensaje.textContent = "";
-    return;
-  }
-
-  campo.classList.add("is-invalid");
-  contenedorMensaje.textContent = mensaje;
-  contenedorMensaje.className = "mensaje-validacion text-danger small mt-1";
+  campo.classList.toggle("is-valid", esValido);
+  campo.classList.toggle("is-invalid", !esValido);
+  campo.setAttribute("aria-invalid", String(!esValido));
+  contenedorMensaje.textContent = esValido ? "" : mensaje;
+  contenedorMensaje.className = esValido
+    ? "mensaje-validacion"
+    : "mensaje-validacion text-danger small mt-1";
 }
 
 /**
@@ -143,6 +144,11 @@ function mostrarMensajeFormulario(tipo, mensaje) {
       ${mensaje}
     </div>
   `;
+
+  /* El éxito permanece visible y también se anuncia mediante el snackbar. */
+  if (tipo === "success" && window.InterfazRitual) {
+    window.InterfazRitual.mostrarSnackbar(mensaje);
+  }
 }
 
 /**
@@ -159,6 +165,7 @@ function limpiarEstadosValidacion() {
 
   campos.forEach((campo) => {
     campo.classList.remove("is-valid", "is-invalid");
+    campo.removeAttribute("aria-invalid");
   });
 
   mensajeNombreCompleto.textContent = "";
@@ -215,6 +222,7 @@ formularioRegistro.addEventListener("submit", (evento) => {
       "danger",
       "Revisa los campos marcados antes de crear tu cuenta.",
     );
+    formularioRegistro.querySelector(".is-invalid")?.focus();
     return;
   }
 

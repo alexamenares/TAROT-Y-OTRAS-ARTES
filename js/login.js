@@ -1,5 +1,11 @@
 /**
- * Obtenemos el formulario, los campos y los espacios para los mensajes.
+ * Inicio de sesión simulado del MVP.
+ *
+ * No autentica contra el backend ni genera un token: solo demuestra el flujo
+ * de validación y mensaje de acceso que la interfaz tendría antes de integrar
+ * la API real.
+ * Los elementos obtenidos a continuación permiten asociar cada regla con su
+ * campo y con el mensaje que explica cómo corregirlo.
  */
 const formularioLogin = document.getElementById("formularioLogin");
 
@@ -15,8 +21,7 @@ const mensajeFormularioLogin = document.getElementById(
 );
 
 /**
- * Actualiza visualmente un campo válido o inválido.
- * Bootstrap utiliza is-valid e is-invalid para sus estilos de validación.
+ * Actualiza el control nativo y mantiene el mensaje visible para todas las personas.
  */
 function actualizarEstadoCampoLogin(
   campo,
@@ -24,17 +29,13 @@ function actualizarEstadoCampoLogin(
   esValido,
   mensaje,
 ) {
-  campo.classList.remove("is-valid", "is-invalid");
-
-  if (esValido) {
-    campo.classList.add("is-valid");
-    contenedorMensaje.textContent = "";
-    return;
-  }
-
-  campo.classList.add("is-invalid");
-  contenedorMensaje.textContent = mensaje;
-  contenedorMensaje.className = "mensaje-validacion text-danger small mt-1";
+  campo.classList.toggle("is-valid", esValido);
+  campo.classList.toggle("is-invalid", !esValido);
+  campo.setAttribute("aria-invalid", String(!esValido));
+  contenedorMensaje.textContent = esValido ? "" : mensaje;
+  contenedorMensaje.className = esValido
+    ? "mensaje-validacion"
+    : "mensaje-validacion text-danger small mt-1";
 }
 
 /**
@@ -85,6 +86,11 @@ function mostrarMensajeLogin(tipo, mensaje) {
       ${mensaje}
     </div>
   `;
+
+  /* El snackbar complementa el mensaje persistente sin reemplazarlo. */
+  if (tipo === "success" && window.InterfazRitual) {
+    window.InterfazRitual.mostrarSnackbar(mensaje);
+  }
 }
 
 /**
@@ -95,6 +101,7 @@ function limpiarEstadosLogin() {
 
   campos.forEach((campo) => {
     campo.classList.remove("is-valid", "is-invalid");
+    campo.removeAttribute("aria-invalid");
   });
 
   mensajeCorreoLogin.textContent = "";
@@ -119,6 +126,7 @@ formularioLogin.addEventListener("submit", (evento) => {
 
   if (!formularioEsValido) {
     mostrarMensajeLogin("danger", "Revisa tus datos antes de continuar.");
+    formularioLogin.querySelector(".is-invalid")?.focus();
     return;
   }
 

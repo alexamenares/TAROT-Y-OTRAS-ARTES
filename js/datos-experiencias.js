@@ -1,9 +1,12 @@
-/*
-  Arreglo de datos simulados de la tienda de experiencias.
-
-  Durante esta primera evaluación no consultaremos el backend.
-  Más adelante, este arreglo será reemplazado por datos recibidos desde la API.
-*/
+/**
+ * Datos simulados del catálogo de experiencias.
+ *
+ * En este MVP no se consulta el backend. Más adelante este arreglo podrá ser
+ * reemplazado por una respuesta de API sin rehacer las tarjetas ni el detalle.
+ * El precio 0 tiene significado funcional: inicia directamente “Una carta”;
+ * cualquier precio mayor a 0 corresponde a una experiencia que puede ir al
+ * carrito único.
+ */
 const experiencias = [
   {
     id: 1,
