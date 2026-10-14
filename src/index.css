@@ -1,0 +1,44 @@
+@import url("https://fonts.googleapis.com/css2?family=Cinzel:wght@500;600;700&family=Lora:wght@400;500;600&display=swap");
+
+:root {
+  --fondo: #151220;
+  --superficie: #211b2f;
+  --superficie-elevada: #2b243b;
+  --violeta: #493466;
+  --lavanda: #cdb8ff;
+  --dorado: #e4c580;
+  --marfil: #f0e8f0;
+  --texto-secundario: #d1c5d6;
+  --borde: #9a8e9f;
+  --exito: #a8d9ba;
+  --error: #ffb4ab;
+  --alto-menu: 86px;
+  /* Alias semánticos usados por el sistema visual completo. */
+  --fondo-profundo: #0d0918;
+  --fondo-alternativo: #191425;
+  --ciruela: #2b1f3b;
+  --texto: var(--marfil);
+  --texto-suave: var(--texto-secundario);
+  --texto-atenuado: #a99ead;
+  --dorado-claro: var(--dorado);
+  --lavanda-clara: var(--lavanda);
+  font-family: "Lora", Georgia, serif;
+  color: var(--marfil);
+  background: var(--fondo);
+  font-synthesis: none;
+  text-rendering: optimizeLegibility;
+}
+
+* { box-sizing: border-box; }
+html { min-width: 320px; background: var(--fondo); scroll-behavior: smooth; }
+body { min-width: 320px; min-height: 100vh; margin: 0; background: var(--fondo); color: var(--marfil); }
+#root { min-height: 100vh; }
+button, input, select, textarea { font: inherit; }
+img, video { max-width: 100%; }
+a { color: var(--lavanda); }
+a:hover { color: var(--dorado); }
+::selection { background: var(--lavanda); color: #21142f; }
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { scroll-behavior: auto !important; transition-duration: 0.01ms !important; animation-duration: 0.01ms !important; }
+}
