@@ -1,3 +1,7 @@
+/**
+ * ORGANISMO · Pie compartido con identidad, enlaces y texto de cierre.
+ * Modificar este archivo actualiza el pie de todas las rutas por medio de Layout.
+ */
 import { Container } from "react-bootstrap";
 import { Link } from "react-router-dom";
 
@@ -11,7 +15,9 @@ function PiePagina() {
               <img src="/imagenes/ouroboro-identidad-original.png" alt="" />
               Tarot y Otras Artes
             </Link>
-            <p>Experiencias, objetos y recursos para explorar tu camino interior.</p>
+            <p>
+              Experiencias, objetos y recursos para explorar tu camino interior.
+            </p>
           </div>
           <nav aria-label="Enlaces secundarios">
             <Link to="/tienda">Tienda</Link>

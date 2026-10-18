@@ -1,3 +1,8 @@
+/**
+ * ORGANISMO · Estructura común: Encabezado, main con Outlet y PiePagina.
+ * Outlet recibe la página de la ruta activa. useEffect vuelve al inicio
+ * del documento cuando cambia pathname, como al cargar una página tradicional.
+ */
 import { useEffect } from "react";
 import { Outlet, useLocation } from "react-router-dom";
 import Encabezado from "./Encabezado";
@@ -13,7 +18,9 @@ function Layout() {
   return (
     <div className="aplicacion">
       <Encabezado />
-      <main><Outlet /></main>
+      <main>
+        <Outlet />
+      </main>
       <PiePagina />
     </div>
   );

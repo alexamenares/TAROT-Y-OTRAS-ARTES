@@ -177,7 +177,10 @@ a:hover {
   border: 1px solid rgba(185, 147, 255, 0.55);
   border-radius: 50%;
   text-decoration: none;
-  transition: background-color 180ms ease, border-color 180ms ease, color 180ms ease;
+  transition:
+    background-color 180ms ease,
+    border-color 180ms ease,
+    color 180ms ease;
 }
 
 .boton-carrito:hover,
@@ -251,7 +254,12 @@ a:hover {
   position: absolute;
   inset: 0;
   z-index: -1;
-  background: linear-gradient(90deg, rgba(8, 5, 15, 0.96) 0%, rgba(8, 5, 15, 0.78) 48%, rgba(8, 5, 15, 0.3) 100%);
+  background: linear-gradient(
+    90deg,
+    rgba(8, 5, 15, 0.96) 0%,
+    rgba(8, 5, 15, 0.78) 48%,
+    rgba(8, 5, 15, 0.3) 100%
+  );
   content: "";
 }
 
@@ -329,7 +337,11 @@ a:hover {
   border-radius: 999px;
   font-weight: 800;
   letter-spacing: 0;
-  transition: transform 160ms ease, box-shadow 160ms ease, background-color 160ms ease, border-color 160ms ease;
+  transition:
+    transform 160ms ease,
+    box-shadow 160ms ease,
+    background-color 160ms ease,
+    border-color 160ms ease;
 }
 
 .btn:hover {
@@ -411,7 +423,10 @@ a:hover {
 .tarjeta-ritual {
   height: 100%;
   overflow: hidden;
-  transition: border-color 180ms ease, transform 180ms ease, box-shadow 180ms ease;
+  transition:
+    border-color 180ms ease,
+    transform 180ms ease,
+    box-shadow 180ms ease;
 }
 
 .tarjeta-ritual:hover {
@@ -653,7 +668,9 @@ a:hover {
 
 .control-cantidad button {
   font-size: 1.3rem;
-  transition: color 150ms ease, background-color 150ms ease;
+  transition:
+    color 150ms ease,
+    background-color 150ms ease;
 }
 
 .control-cantidad button:hover:not(:disabled),
@@ -804,7 +821,10 @@ a:hover {
   border: 1px solid var(--borde);
   border-radius: 0.85rem;
   text-align: left;
-  transition: border-color 160ms ease, background-color 160ms ease, transform 160ms ease;
+  transition:
+    border-color 160ms ease,
+    background-color 160ms ease,
+    transform 160ms ease;
 }
 
 .profesional-opcion:hover,
@@ -1640,6 +1660,64 @@ a:hover {
 
 .encabezado-sitio .boton-carrito::after {
   display: none;
+}
+
+/* Biblioteca: lectura cómoda, imágenes completas y actividades reutilizables.
+   Los colores proceden de las variables Ritual nocturno definidas al inicio. */
+.lectura-biblioteca {
+  max-width: 960px;
+}
+.cabecera-lectura {
+  display: flex;
+  align-items: center;
+  gap: 2rem;
+  margin: 2rem 0;
+}
+.cabecera-lectura img {
+  width: 120px;
+  height: 190px;
+  object-fit: contain;
+  flex-shrink: 0;
+}
+.cabecera-lectura h1 {
+  font-size: clamp(1.8rem, 4vw, 2.8rem);
+}
+.seccion-lectura {
+  margin: 2rem 0;
+  line-height: 1.85;
+}
+.seccion-lectura h2,
+.actividad-biblioteca h2 {
+  font-size: 1.6rem;
+}
+.actividad-biblioteca,
+.entrada-diario {
+  padding: clamp(1rem, 3vw, 2rem);
+  margin-top: 2rem;
+}
+.arcano-ampliado {
+  display: block;
+  max-width: 100%;
+  height: 300px;
+  object-fit: contain;
+  margin: auto;
+}
+.texto-anotacion {
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
+}
+.entrada-diario p {
+  overflow-wrap: anywhere;
+}
+@media (max-width: 575.98px) {
+  .cabecera-lectura {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+  .cabecera-lectura img {
+    width: 90px;
+    height: 140px;
+  }
 }
 
 .pie-pagina {

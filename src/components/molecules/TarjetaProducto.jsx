@@ -1,3 +1,8 @@
+/**
+ * MOLÉCULA · Tarjeta reutilizable del catálogo de productos.
+ * Recibe el producto completo y enlaza su detalle; el stock lo administra
+ * carritoService cuando el usuario decide incorporarlo a su compra.
+ */
 import { Button, Card } from "react-bootstrap";
 import { Link } from "react-router-dom";
 import Precio from "../atoms/Precio";
@@ -14,7 +19,11 @@ function TarjetaProducto({ producto }) {
         <Card.Text>{producto.descripcion}</Card.Text>
         <div className="tarjeta-catalogo__pie">
           <Precio valor={producto.precio} />
-          <Button as={Link} to={`/tienda/${producto.id}`} variant="ritual-outline">
+          <Button
+            as={Link}
+            to={`/tienda/${producto.id}`}
+            variant="ritual-outline"
+          >
             Ver producto
           </Button>
         </div>
