@@ -1,3 +1,8 @@
+/**
+ * PEDIDOS SIMULADOS · Conserva historial y copia del último pedido.
+ * El número combina fecha y secuencia local. No representa una transacción
+ * de pago. FinalizarCompra lo crea antes de vaciar el carrito.
+ */
 import { guardarSesion, leerSesion } from "./storageService";
 
 const CLAVE_PEDIDOS = "tarot-react-pedidos";

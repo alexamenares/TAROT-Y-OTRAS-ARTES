@@ -1,3 +1,8 @@
+/**
+ * UTILIDADES · Funciones sin estado compartidas por páginas y componentes.
+ * Intl aplica el formato chileno; las fechas de agenda se interpretan a mediodía
+ * local para mantener el día seleccionado. correoValido verifica solo sintaxis.
+ */
 export function formatearPrecio(valor) {
   return new Intl.NumberFormat("es-CL", {
     style: "currency",

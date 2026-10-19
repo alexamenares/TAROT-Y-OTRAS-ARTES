@@ -1,3 +1,9 @@
+/**
+ * ESTADO COMPARTIDO · Conecta acciones del catálogo con carrito y encabezado.
+ * La inicialización perezosa lee storage una vez al montar el proveedor.
+ * Cada acción llama al servicio y luego setLineas provoca el nuevo render.
+ * Subtotal y cantidad se derivan de lineas, evitando totales desincronizados.
+ */
 import { createContext, useContext, useState } from "react";
 import * as carritoService from "../services/carritoService";
 
@@ -41,7 +47,9 @@ export function CarritoProvider({ children }) {
     contieneProductos: lineas.some((linea) => linea.tipo === "producto"),
   };
 
-  return <CarritoContext.Provider value={valor}>{children}</CarritoContext.Provider>;
+  return (
+    <CarritoContext.Provider value={valor}>{children}</CarritoContext.Provider>
+  );
 }
 
 /* El hook permanece junto al Provider para exponer una única API del carrito. */

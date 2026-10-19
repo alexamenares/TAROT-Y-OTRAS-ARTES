@@ -1,3 +1,9 @@
+/**
+ * MAPA DEL SITIO: cada Route vincula una URL con una pantalla de pages/.
+ * Layout mantiene encabezado y pie; :id y :slug son parámetros de la URL.
+ * RutaProtegida exige sesión simulada para agenda y reservas; * muestra 404.
+ * Para añadir una pantalla, importa su componente y declara su ruta aquí.
+ */
 import { Navigate, Route, Routes } from "react-router-dom";
 import "./styles/ritual.css";
 import Layout from "./components/organisms/Layout";
@@ -6,6 +12,7 @@ import Administracion from "./pages/Administracion";
 import Agenda from "./pages/Agenda";
 import ArticuloBlog from "./pages/ArticuloBlog";
 import Biblioteca from "./pages/Biblioteca";
+import DetalleRecurso from "./pages/DetalleRecurso";
 import Blog from "./pages/Blog";
 import Carrito from "./pages/Carrito";
 import Contacto from "./pages/Contacto";
@@ -36,6 +43,7 @@ function App() {
         <Route path="finalizar-compra" element={<FinalizarCompra />} />
         <Route path="pedido-confirmado" element={<PedidoConfirmado />} />
         <Route path="biblioteca" element={<Biblioteca />} />
+        <Route path="biblioteca/:id" element={<DetalleRecurso />} />
         <Route path="blog" element={<Blog />} />
         <Route path="blog/:slug" element={<ArticuloBlog />} />
         <Route path="nosotros" element={<Nosotros />} />
@@ -43,8 +51,22 @@ function App() {
         <Route path="ingresar" element={<Ingresar />} />
         <Route path="login" element={<Navigate to="/ingresar" replace />} />
         <Route path="registro" element={<Registro />} />
-        <Route path="agenda" element={<RutaProtegida><Agenda /></RutaProtegida>} />
-        <Route path="mis-reservas" element={<RutaProtegida><MisReservas /></RutaProtegida>} />
+        <Route
+          path="agenda"
+          element={
+            <RutaProtegida>
+              <Agenda />
+            </RutaProtegida>
+          }
+        />
+        <Route
+          path="mis-reservas"
+          element={
+            <RutaProtegida>
+              <MisReservas />
+            </RutaProtegida>
+          }
+        />
         <Route path="administracion" element={<Administracion />} />
         <Route path="*" element={<NoEncontrada />} />
       </Route>

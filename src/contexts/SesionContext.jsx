@@ -1,3 +1,8 @@
+/**
+ * ESTADO COMPARTIDO · Expone usuario, ingresar y salir mediante useSesion.
+ * El servicio guarda la identidad temporal; el contexto notifica a React
+ * para actualizar inmediatamente navegación y rutas protegidas.
+ */
 import { createContext, useContext, useState } from "react";
 import * as sesionService from "../services/sesionService";
 
@@ -20,7 +25,9 @@ export function SesionProvider({ children }) {
     },
   };
 
-  return <SesionContext.Provider value={valor}>{children}</SesionContext.Provider>;
+  return (
+    <SesionContext.Provider value={valor}>{children}</SesionContext.Provider>
+  );
 }
 
 /* El hook permanece junto al Provider para exponer una única API de sesión. */

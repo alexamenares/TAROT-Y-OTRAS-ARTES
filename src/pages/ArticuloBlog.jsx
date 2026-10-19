@@ -1,3 +1,8 @@
+/**
+ * RUTA /blog/:slug · Resuelve un artículo por su identificador legible.
+ * Las secciones pertenecen a data/articulos.js; aquí solo se maquetan.
+ * La validación inicial evita intentar leer propiedades de un artículo ausente.
+ */
 import { Button, Container } from "react-bootstrap";
 import { Link, useParams } from "react-router-dom";
 import articulos from "../data/articulos";
@@ -8,14 +13,28 @@ function ArticuloBlog() {
   const articulo = articulos.find((elemento) => elemento.slug === slug);
   if (!articulo) return <NoEncontrada />;
   return (
-    <section className="seccion-contenido"><Container className="contenedor-articulo">
-      <Link className="enlace-volver" to="/blog">← Volver al blog</Link>
-      <article className="articulo-blog">
-        <p className="tipo-contenido">{articulo.meta}</p><h1>{articulo.titulo}</h1><img src={articulo.imagen} alt={articulo.alt} /><p className="introduccion-articulo">{articulo.introduccion}</p>
-        {articulo.secciones.map(([titulo, texto]) => <section key={titulo}><h2>{titulo}</h2><p>{texto}</p></section>)}
-        <Button as={Link} to="/experiencias" variant="ritual">Explorar experiencias</Button>
-      </article>
-    </Container></section>
+    <section className="seccion-contenido">
+      <Container className="contenedor-articulo">
+        <Link className="enlace-volver" to="/blog">
+          ← Volver al blog
+        </Link>
+        <article className="articulo-blog">
+          <p className="tipo-contenido">{articulo.meta}</p>
+          <h1>{articulo.titulo}</h1>
+          <img src={articulo.imagen} alt={articulo.alt} />
+          <p className="introduccion-articulo">{articulo.introduccion}</p>
+          {articulo.secciones.map(([titulo, texto]) => (
+            <section key={titulo}>
+              <h2>{titulo}</h2>
+              <p>{texto}</p>
+            </section>
+          ))}
+          <Button as={Link} to="/experiencias" variant="ritual">
+            Explorar experiencias
+          </Button>
+        </article>
+      </Container>
+    </section>
   );
 }
 
