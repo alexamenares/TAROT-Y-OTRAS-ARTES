@@ -15,8 +15,8 @@ const experiencias = [
       "Una pausa breve para observar una carta, reconocer sus símbolos y llevar una pregunta clara a tu jornada.",
     precio: 0,
     duracion: "5 minutos",
-    imagen: "/imagenes/00-el-loco.png",
-    alt: "Carta de Tarot El Loco",
+    imagen: "/imagenes/experiencia-una-carta.png",
+    alt: "Una carta de reverso botánico sobre terciopelo violeta con amuleto ouroboros.",
   },
   {
     id: "2",
@@ -28,8 +28,8 @@ const experiencias = [
       "Una lectura guiada que propone tres posiciones y preguntas concretas para mirar tu proceso con perspectiva.",
     precio: 2990,
     duracion: "20 minutos",
-    imagen: "/imagenes/27-seis-de-bastos.png",
-    alt: "Carta de Tarot Seis de Bastos",
+    imagen: "/imagenes/experiencia-tres-cartas.png",
+    alt: "Tres cartas de reverso botánico dispuestas sobre terciopelo violeta.",
   },
   {
     id: "3",
@@ -41,8 +41,8 @@ const experiencias = [
       "Una práctica pausada de respiración, observación simbólica y escritura para cerrar ciclos con amabilidad.",
     precio: 1990,
     duracion: "15 minutos",
-    imagen: "/imagenes/52-tres-de-espadas.png",
-    alt: "Carta de Tarot Tres de Espadas",
+    imagen: "/imagenes/experiencia-sanar-y-soltar-seis-espadas.png",
+    alt: "Seis de Espadas Rider-Waite en un soporte de bronce, rodeado de vela y terciopelo violeta.",
   },
   // Nuevas experiencias: valores y duraciones de demostración editables aquí.
   // El catálogo, los detalles y el carrito consumen este mismo arreglo.
@@ -71,6 +71,20 @@ const experiencias = [
     duracion: "15 minutos",
     imagen: "/imagenes/experiencia-pendulo.png",
     alt: "Péndulo de amatista con cadena de bronce sobre una base de madera oscura",
+  },
+
+  {
+    id: "6",
+    categoria: "Runas",
+    nombre: "Una runa",
+    descripcion:
+      "Explora un símbolo rúnico y una reflexión breve para orientar tu pregunta.",
+    detalle:
+      "Una práctica guiada para tomar una runa, observar sus formas y registrar una reflexión personal. Su propósito es acompañar la introspección; no entrega predicciones ni certezas para tomar decisiones importantes.",
+    precio: 1990,
+    duracion: "10 minutos",
+    imagen: "/imagenes/experiencia-una-runa.png",
+    alt: "Runas de piedra sobre terciopelo violeta, acompañadas por una vela, amatista y un símbolo ouroboros.",
   },
 ];
 

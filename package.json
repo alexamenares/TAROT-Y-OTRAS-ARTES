@@ -3,17 +3,17 @@
   "private": true,
   "version": "0.0.0",
   "type": "module",
- "scripts": {
-  "dev": "vite",
-  "build": "vite build",
-  "lint": "eslint .",
-  "preview": "vite preview",
-  "test": "vitest run",
-  "test:watch": "vitest",
-  "test:servicios": "vitest run src/tests/servicios.test.js",
-  "format": "prettier --write \"src/**/*.{js,jsx,css}\" \"tests/**/*.js\"",
-  "format:check": "prettier --check \"src/**/*.{js,jsx,css}\" \"tests/**/*.js\""
-},
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "lint": "eslint .",
+    "preview": "vite preview",
+    "test": "vitest run",
+    "test:watch": "vitest",
+    "test:servicios": "node --test tests/*.test.js",
+    "format": "prettier --write \"src/**/*.{js,jsx,css}\" \"tests/**/*.js\"",
+    "format:check": "prettier --check \"src/**/*.{js,jsx,css}\" \"tests/**/*.js\""
+  },
   "dependencies": {
     "bootstrap": "^5.3.8",
     "react": "^19.2.8",
@@ -39,5 +39,3 @@
     "vitest": "^5.0.5"
   }
 }
-
-

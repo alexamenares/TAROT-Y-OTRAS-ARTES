@@ -1,6 +1,6 @@
 /**
  * Configuración exclusiva de Vitest.
- * jsdom crea un navegador simulado para probar componentes React sin abrir
+ * jsdom crea un navegador para probar componentes React sin abrir
  * Vite. El patrón include separa estas cuatro pruebas del conjunto histórico
  * de pruebas de servicios que se mantiene en tests/.
  */

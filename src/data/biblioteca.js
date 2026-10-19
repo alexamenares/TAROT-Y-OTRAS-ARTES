@@ -5,8 +5,8 @@ const recursosBiblioteca = [
     titulo: "Arcanos mayores para empezar",
     descripcion:
       "Introducción breve a las cartas que representan etapas, decisiones y aprendizajes profundos.",
-    imagen: "/imagenes/01-el-mago.png",
-    alt: "Carta El Mago",
+    imagen: "/imagenes/biblioteca-tirada-simple.png",
+    alt: "Preparación de una tirada simple con carta de reverso botánico, libreta y pluma.",
   },
   {
     id: 2,
@@ -14,8 +14,8 @@ const recursosBiblioteca = [
     titulo: "Cómo preparar una tirada simple",
     descripcion:
       "Pasos para ordenar la pregunta, elegir una carta y registrar una primera impresión.",
-    imagen: "/imagenes/02-la-sacerdotisa.png",
-    alt: "Carta La Sacerdotisa",
+    imagen: "/imagenes/biblioteca-tirada-simple.png",
+    alt: "Tirada simple sobre terciopelo violeta con libreta, pluma, amatista y sello ouroboros.",
   },
   {
     id: 3,
@@ -23,17 +23,17 @@ const recursosBiblioteca = [
     titulo: "Origen simbólico del Tarot",
     descripcion:
       "Recorrido resumido por el uso cultural de las cartas como imágenes y narración.",
-    imagen: "/imagenes/10-la-rueda-de-la-fortuna.png",
-    alt: "Carta La Rueda de la Fortuna",
+    imagen: "/imagenes/biblioteca-origen-simbolico.png",
+    alt: "Libro histórico abierto con grabados ornamentales, lupa y cartas de reverso botánico.",
   },
   {
     id: 4,
     categoria: "Guías",
     titulo: "Diario de lecturas",
     descripcion:
-      "Plantilla simulada para anotar fecha, pregunta, carta, observaciones y una acción posible.",
-    imagen: "/imagenes/17-la-estrella.png",
-    alt: "Carta La Estrella",
+      "Plantilla para anotar fecha, pregunta, carta, observaciones y una acción posible.",
+    imagen: "/imagenes/biblioteca-diario-lecturas.png",
+    alt: "Diario abierto para registrar lecturas, con pluma, amatista y una carta.",
   },
   {
     id: 5,
@@ -41,8 +41,8 @@ const recursosBiblioteca = [
     titulo: "Lectura intuitiva responsable",
     descripcion:
       "Recomendaciones para usar el Tarot como apoyo reflexivo, sin reemplazar ayuda profesional.",
-    imagen: "/imagenes/14-la-templanza.png",
-    alt: "Carta La Templanza",
+    imagen: "/imagenes/biblioteca-lectura-intuitiva.png",
+    alt: "Balanza de bronce, brújula y libreta como símbolos de reflexión responsable.",
   },
   {
     id: 6,
@@ -50,8 +50,8 @@ const recursosBiblioteca = [
     titulo: "Tarot y arte editorial",
     descripcion:
       "Una mirada a la relación entre imagen, narrativa y diseño en distintas barajas.",
-    imagen: "/imagenes/21-el-mundo.png",
-    alt: "Carta El Mundo",
+    imagen: "/imagenes/biblioteca-arte-editorial.png",
+    alt: "Libro de arte, plancha de impresión y cartas de reverso botánico.",
   },
 ];
 
@@ -121,12 +121,9 @@ const lecturas = {
     ],
     fuentes: [
       {
-        titulo: "The Morgan Library & Museum · Visconti-Sforza Tarot Cards",
-        url: "https://www.themorgan.org/collection/tarot-cards",
-      },
-      {
-        titulo: "The Met · The World in Play",
-        url: "https://www.metmuseum.org/exhibitions/listings/2016/world-in-play/exhibition-galleries",
+        titulo:
+          "La fascinante historia de las cartas del tarot: de un famoso juego de cartas a un ritual místico",
+        url: "https://mymodernmet.com/es/historia-cartas-tarot/",
       },
     ],
   },

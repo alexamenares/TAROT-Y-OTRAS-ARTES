@@ -129,7 +129,7 @@ function FinalizarCompra() {
       <section className="seccion-contenido">
         <Container>
           <Alert variant="ritual">
-            <strong>Compra simulada:</strong> no se realizará ningún cobro.
+            <strong>Compra:</strong> (no se realizará ningún cobro).
           </Alert>
           {lineas.length === 0 ? (
             <div className="estado-vacio">
@@ -292,7 +292,7 @@ function FinalizarCompra() {
                     </Alert>
                   )}
                   <Button type="submit" variant="ritual">
-                    Confirmar pedido simulado
+                    Confirmar pedido
                   </Button>
                 </Form>
               </Col>

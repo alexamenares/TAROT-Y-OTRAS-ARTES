@@ -53,7 +53,7 @@ function Contacto() {
     }
     setResultado({
       tipo: "ritual",
-      mensaje: "Mensaje enviado correctamente en modo simulado.",
+      mensaje: "Mensaje enviado correctamente.",
     });
     setDatos(inicial);
     setErrores({});
@@ -64,7 +64,7 @@ function Contacto() {
       <HeroPagina
         etiqueta="Contacto"
         titulo="Cuéntanos qué necesitas"
-        descripcion="Completa el formulario y revisa los mensajes en tiempo real. El envío continúa siendo simulado."
+        descripcion="Completa el formulario y revisa los mensajes en tiempo real."
         imagen="/imagenes/hero-contacto.png"
       />
       <section className="seccion-contenido">
@@ -114,14 +114,13 @@ function Contacto() {
                   </Alert>
                 )}
                 <Button type="submit" variant="ritual">
-                  Enviar mensaje simulado
+                  Enviar el mensaje
                 </Button>
               </Form>
             </Col>
             <Col lg={4}>
               <aside className="tarjeta-ritual datos-contacto">
-                <p className="tipo-contenido">Atención simulada</p>
-                <h2>Canales del MVP</h2>
+                <h2>Coordenadas</h2>
                 <p>
                   <strong>Correo</strong>
                   <br />
@@ -132,7 +131,6 @@ function Contacto() {
                   <br />
                   Lunes a viernes, 10:00 a 18:00
                 </p>
-                <p>No se envían mensajes reales en esta etapa.</p>
               </aside>
             </Col>
           </Row>

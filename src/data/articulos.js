@@ -10,8 +10,8 @@ const articulos = [
     titulo: "Cómo iniciar una tirada diaria sin complicarte",
     resumen:
       "Una práctica breve para observar símbolos y comenzar el día con una pregunta consciente.",
-    imagen: "/imagenes/00-el-loco.png",
-    alt: "Carta El Loco asociada a una práctica diaria",
+    imagen: "/imagenes/articulo-tirada-diaria.png",
+    alt: "Carta de reverso botánico sobre terciopelo violeta, libreta y vela.",
     introduccion:
       "Una tirada diaria no necesita convertirse en una predicción. Puede ser una pausa sencilla para reconocer cómo llegas al día y qué merece tu atención.",
     secciones: [
@@ -35,8 +35,8 @@ const articulos = [
     titulo: "Rituales simples para preparar tus cartas",
     resumen:
       "Orden, intención y cuidado para crear un espacio de lectura sereno y personal.",
-    imagen: "/imagenes/27-seis-de-bastos.png",
-    alt: "Carta Seis de Bastos asociada a la preparación del mazo",
+    imagen: "/imagenes/articulo-preparar-cartas.png",
+    alt: "Mazo de reverso botánico junto a paño violeta, campana e incienso.",
     introduccion:
       "Preparar las cartas no exige objetos especiales. Lo importante es construir una transición clara entre el ritmo cotidiano y el momento de observación.",
     secciones: [

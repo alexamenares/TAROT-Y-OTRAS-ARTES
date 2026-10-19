@@ -34,7 +34,7 @@ function Administracion() {
   return (
     <section className="seccion-contenido pagina-admin">
       <Container>
-        <p className="tipo-contenido">Administración simulada</p>
+        <p className="tipo-contenido">Administración</p>
         <h1>Panel interno del MVP</h1>
         <p>Vista demostrativa sin roles reales, API ni JWT.</p>
         <Row className="g-3 metricas-admin">

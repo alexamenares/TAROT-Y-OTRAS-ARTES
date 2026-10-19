@@ -66,13 +66,13 @@ function Inicio() {
             {[
               [
                 "/biblioteca",
-                "/imagenes/01-el-mago.png",
+                "/imagenes/02-la-sacerdotisa.png",
                 "Biblioteca",
                 "Guías y recursos para estudiar símbolos y tiradas.",
               ],
               [
                 "/blog",
-                "/imagenes/17-la-estrella.png",
+                "/imagenes/09-el-ermitano.png",
                 "Blog",
                 "Lecturas breves para acompañar tu práctica personal.",
               ],
@@ -104,7 +104,7 @@ function Inicio() {
         <Container className="seccion-administracion__contenido">
           <div>
             <Etiqueta>Administración del sitio</Etiqueta>
-            <h2>Acceso interno simulado</h2>
+            <h2>Panel de Administración</h2>
             <p>
               Espacio reservado para administradores y moderadores; se mantiene
               fuera del menú público.

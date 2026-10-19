@@ -1,7 +1,7 @@
 /**
  * MAPA DEL SITIO: cada Route vincula una URL con una pantalla de pages/.
  * Layout mantiene encabezado y pie; :id y :slug son parámetros de la URL.
- * RutaProtegida exige sesión simulada para agenda y reservas; * muestra 404.
+ * RutaProtegida exige sesión para agenda y reservas; * muestra 404.
  * Para añadir una pantalla, importa su componente y declara su ruta aquí.
  */
 import { Navigate, Route, Routes } from "react-router-dom";

@@ -21,7 +21,7 @@ function Tienda() {
       <HeroPagina
         etiqueta="Tienda ritual"
         titulo="Objetos para acompañar tu práctica"
-        descripcion="Mazos, libros y elementos de bienestar reunidos en un catálogo simulado con stock local."
+        descripcion="Mazos, libros y elementos de bienestar reunidos en un catálogo con stock local."
         imagen="/imagenes/hero-tienda.png"
       />
       <section className="seccion-contenido">

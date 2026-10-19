@@ -46,7 +46,7 @@ function DetalleProducto() {
                 </dd>
               </div>
               <div>
-                <dt>Stock simulado</dt>
+                <dt>Stock</dt>
                 <dd>{producto.stock} unidades</dd>
               </div>
             </dl>

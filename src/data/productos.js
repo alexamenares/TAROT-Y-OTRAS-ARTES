@@ -125,6 +125,17 @@ const productos = [
     imagen: "/imagenes/productos/set-gemas-7-chakras.png",
     alt: "Set de siete gemas de distintos colores",
   },
+  {
+    id: "set-pendulos-gemas",
+    nombre: "Set de péndulos de gemas",
+    categoria: "Accesorios rituales",
+    precio: 14990,
+    stock: 7,
+    descripcion:
+      "Set de tres péndulos de amatista, cuarzo rosa y obsidiana para acompañar momentos de reflexión y concentración personal.",
+    imagen: "/imagenes/productos/producto-set-pendulos.png",
+    alt: "Tres péndulos de amatista, cuarzo rosa y obsidiana sobre terciopelo violeta.",
+  },
 ];
 
 export const categoriasProductos = [

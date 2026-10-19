@@ -59,8 +59,9 @@ function GrupoCarrito({ titulo, lineas, onCambiar, onQuitar }) {
 }
 
 function Carrito() {
-  const { lineas, cambiarCantidad, eliminar, subtotal } = useCarrito();
+  const { lineas, cambiarCantidad, eliminar, vaciar, subtotal } = useCarrito();
   const [lineaAEliminar, setLineaAEliminar] = useState(null);
+  const [confirmarVaciado, setConfirmarVaciado] = useState(false);
   const [mensaje, setMensaje] = useState("");
   const experiencias = lineas.filter((linea) => linea.tipo === "experiencia");
   const productos = lineas.filter((linea) => linea.tipo === "producto");
@@ -74,6 +75,13 @@ function Carrito() {
     eliminar(lineaAEliminar.tipo, lineaAEliminar.id);
     setMensaje(`${lineaAEliminar.nombre} fue quitado del carrito.`);
     setLineaAEliminar(null);
+  }
+
+  /* Vaciar es una acción global: primero se confirma para evitar borrados accidentales. */
+  function confirmarVaciadoCarrito() {
+    vaciar();
+    setMensaje("El carrito fue vaciado correctamente.");
+    setConfirmarVaciado(false);
   }
 
   return (
@@ -151,6 +159,14 @@ function Carrito() {
                   >
                     Finalizar compra
                   </Button>
+                  <Button
+                    type="button"
+                    variant="ritual-outline"
+                    className="w-100 mt-2"
+                    onClick={() => setConfirmarVaciado(true)}
+                  >
+                    Vaciar carrito
+                  </Button>
                 </aside>
               </Col>
             </Row>
@@ -179,6 +195,32 @@ function Carrito() {
           </Button>
           <Button variant="ritual" onClick={confirmarEliminacion}>
             Quitar
+          </Button>
+        </Modal.Footer>
+      </Modal>
+
+      <Modal
+        show={confirmarVaciado}
+        onHide={() => setConfirmarVaciado(false)}
+        centered
+        className="modal-ritual"
+      >
+        <Modal.Header closeButton>
+          <Modal.Title>Vaciar carrito</Modal.Title>
+        </Modal.Header>
+        <Modal.Body>
+          ¿Deseas quitar todos los artículos de tu carrito? Esta acción no se
+          puede deshacer.
+        </Modal.Body>
+        <Modal.Footer>
+          <Button
+            variant="ritual-outline"
+            onClick={() => setConfirmarVaciado(false)}
+          >
+            Cancelar
+          </Button>
+          <Button variant="ritual" onClick={confirmarVaciadoCarrito}>
+            Vaciar carrito
           </Button>
         </Modal.Footer>
       </Modal>

@@ -28,14 +28,15 @@ function Nosotros() {
                 <p className="tipo-contenido">Propósito</p>
                 <h2>Acompañar el aprendizaje y la reflexión</h2>
                 <p>
+                  Este es nuestro primer sitio web, como tarotistas e
+                  informáticos estamos uniendo nuestras dos pasiones de vida en
+                  una experiencia dictada desde el corazón.
+                </p>
+                <p>
                   Este sitio demuestra una experiencia completa de navegación,
                   estado, formularios y compra simulada sin presentar el Tarot
                   como sustituto de orientación médica, psicológica, legal o
                   financiera.
-                </p>
-                <p>
-                  La migración a React separa datos, servicios y componentes
-                  para facilitar una futura integración con microservicios.
                 </p>
               </article>
             </Col>
