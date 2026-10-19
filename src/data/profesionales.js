@@ -24,7 +24,9 @@ const profesionales = [
     especialidad: "Tarotista",
     descripcion:
       "Lecturas simbólicas orientadas a decisiones y procesos personales.",
-    imagen: "/imagenes/02-la-sacerdotisa.png",
+    // Esta imagen representa el servicio, no el rostro de Alma. Así se puede
+    // mantener aunque la persona profesional cambie en una versión futura.
+    imagen: "/imagenes/profesionales/tarotista-alma-rojas.png",
     fechas,
     horarios: ["10:00", "12:00", "17:00"],
   },
@@ -34,7 +36,7 @@ const profesionales = [
     especialidad: "Terapeuta",
     descripcion:
       "Acompañamiento integrativo para reconocer emociones y recursos personales.",
-    imagen: "/imagenes/14-la-templanza.png",
+    imagen: "/imagenes/profesionales/terapeuta-elena-silva.png",
     fechas: fechas.slice(1),
     horarios: ["09:30", "15:00", "18:30"],
   },
@@ -44,7 +46,7 @@ const profesionales = [
     especialidad: "Lector de runas",
     descripcion:
       "Sesiones de interpretación de símbolos nórdicos y escritura reflexiva.",
-    imagen: "/imagenes/productos/set-runas.png",
+    imagen: "/imagenes/profesionales/lector-runas-matias-leon.png",
     fechas: fechas.slice(0, 5),
     horarios: ["11:00", "16:00", "19:00"],
   },
@@ -54,7 +56,7 @@ const profesionales = [
     especialidad: "Psicóloga",
     descripcion:
       "Orientación psicológica breve para organizar una inquietud y definir próximos pasos.",
-    imagen: "/imagenes/17-la-estrella.png",
+    imagen: "/imagenes/profesionales/psicologa-camila-soto.png",
     fechas: fechas.slice(2),
     horarios: ["10:30", "14:30", "17:30"],
   },
@@ -64,7 +66,7 @@ const profesionales = [
     especialidad: "Consteladora familiar",
     descripcion:
       "Espacio individual para observar vínculos, posiciones y dinámicas familiares.",
-    imagen: "/imagenes/21-el-mundo.png",
+    imagen: "/imagenes/profesionales/consteladora-sofia-morales.png",
     fechas,
     horarios: ["09:00", "13:00", "18:00"],
   },
